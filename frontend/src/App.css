@@ -1,0 +1,5648 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fa;
+  color: #173b68;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+
+/* =====================================
+   TOP HEADER
+===================================== */
+
+.top-header {
+  height: 80px;
+  background: #ffffff;
+
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+
+  padding: 0 30px;
+
+  border: 1px solid #dfe5ec;
+}
+
+
+/* Ministry */
+
+.railway-ministry {
+  width: 30%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.emblem {
+  width: 52px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emblem img {
+  width: 44px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+}
+
+.railway-ministry h3 {
+  font-size: 17px;
+  color: #234a78;
+  /* margin-bottom: 2px; */
+}
+
+.railway-ministry p {
+  font-size: 14px;
+  color: #62758b;
+}
+
+
+/* NTES */
+
+.ntes-title {
+  text-align: center;
+}
+
+.ntes-title h1 {
+  font-size: 22px;
+  color: #174d91;
+  margin-top: 13px;
+  margin-bottom: 3px;
+}
+
+.ntes-title p {
+  font-size: 15px;
+  color: #356aa5;
+}
+
+
+/* Header Controls */
+
+.header-controls {
+  width: 30%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 18px;
+}
+
+.g20 {
+  width: 90px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.g20 img {
+  width: 85px;
+  height: auto;
+  max-height: 65px;
+  object-fit: contain;
+  display: block;
+}
+
+.language {
+  min-width: 105px;
+  height: 40px;
+  padding: 0 30px 0 13px;
+
+  border: 1px solid #d7dfe8;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #405b78;
+
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+
+  cursor: pointer;
+  outline: none;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language:hover {
+  border-color: #8eb6dc;
+}
+
+.language:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.12);
+}
+
+/* =====================================
+   DARK MODE
+===================================== */
+
+.website.dark-mode {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+.website.dark-mode .top-header {
+  background: #172033;
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .railway-ministry h3,
+.website.dark-mode .ntes-title h1 {
+  color: #e5efff;
+}
+
+.website.dark-mode .railway-ministry p,
+.website.dark-mode .ntes-title p {
+  color: #aebbd0;
+}
+
+.website.dark-mode .main-nav {
+  background: #141d2d;
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .main-nav button {
+  color: #c8d8ed;
+}
+
+.website.dark-mode .main-nav button:hover,
+.website.dark-mode .main-nav button.nav-active {
+  background: #1e334f;
+  color: #5faeff;
+}
+
+.website.dark-mode .services {
+  background: #111827;
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .service-card {
+  background: #172033;
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .service-card h3 {
+  color: #e5e7eb;
+}
+
+.website.dark-mode .service-card p {
+  color: #9caabe;
+}
+
+.website.dark-mode .search-panel {
+  background: #172033;
+}
+
+.website.dark-mode .search-tabs button {
+  background: #263449;
+  color: #b8c7da;
+}
+
+.website.dark-mode .search-input {
+  background: #111827;
+  border-color: #394960;
+}
+
+.website.dark-mode .search-input input {
+  color: #e5e7eb;
+}
+
+.website.dark-mode .search-input input::placeholder {
+  color: #7f8da1;
+}
+
+.website.dark-mode .popular-trains span {
+  color: #aebbd0;
+}
+
+.website.dark-mode .popular-trains button {
+  background: #203a5b;
+  color: #73b7ff;
+}
+
+.website.dark-mode .train-status {
+  background: #172033;
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .status-header {
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .status-header h2 {
+  color: #e5efff;
+}
+
+.website.dark-mode .status-header p {
+  color: #9caabe;
+}
+
+.website.dark-mode .status-box {
+  background: #111827;
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .status-box strong {
+  color: #dce8f7;
+}
+
+.website.dark-mode .eta-section {
+  background: #172b44;
+}
+
+.website.dark-mode .route-section {
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .route-title h3 {
+  color: #e5efff;
+}
+
+.website.dark-mode .close-status {
+  background: #263449;
+  color: #d1d9e5;
+}
+
+.website.dark-mode .language {
+  background: #172033;
+  color: #e5e7eb;
+  border-color: #394960;
+}
+
+.website.dark-mode .scheduled-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+}
+
+.website.dark-mode .scheduled-badge .time-label {
+  color: #94a3b8;
+}
+
+.website.dark-mode .scheduled-badge .time-val {
+  color: #e2e8f0;
+}
+
+.website.dark-mode .predicted-badge {
+  background: rgba(2, 132, 199, 0.14);
+  border-color: rgba(56, 189, 248, 0.28);
+  color: #38bdf8;
+}
+
+.website.dark-mode .predicted-badge .time-label {
+  color: #38bdf8;
+}
+
+.website.dark-mode .predicted-badge .predicted-time {
+  color: #7dd3fc !important;
+}
+
+.website.dark-mode .delay-highlight {
+  background: rgba(245, 158, 11, 0.07);
+  border-color: rgba(245, 158, 11, 0.24);
+}
+
+.website.dark-mode .delay-highlight span {
+  color: #fcd34d;
+}
+
+.website.dark-mode .delay-highlight strong,
+.website.dark-mode .status-box strong.delay,
+.website.dark-mode .status-box .delay,
+.website.dark-mode .delay-text,
+.website.dark-mode .overlay-delay {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.website.dark-mode .live-info-card small.live-eta-highlight {
+  background: rgba(2, 132, 199, 0.15);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: #7dd3fc;
+}
+
+.website.dark-mode .schedule-time-badge.departure {
+  background: rgba(2, 132, 199, 0.16);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.website.dark-mode .schedule-time-badge.arrival {
+  background: rgba(5, 150, 105, 0.16);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+
+/* =====================================
+   NAVIGATION
+===================================== */
+
+.main-nav {
+  height: 56px;
+
+  background: #f8fafc;
+
+  display: flex;
+  align-items: center;
+
+  gap: 48px;
+
+  padding-left: 42px;
+
+  border-left: 1px solid #dfe5ec;
+  border-right: 1px solid #dfe5ec;
+  border-bottom: 1px solid #dfe5ec;
+}
+
+.main-nav a {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  text-decoration: none;
+
+  color: #174b84;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  position: relative;
+}
+
+.main-nav a:hover {
+  color: #0873d1;
+}
+
+.main-nav .nav-active::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 3px;
+
+  background: #1476d4;
+}
+
+
+/* =====================================
+   HERO
+===================================== */
+
+.hero {
+  height: 345px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 47px 6.5%;
+
+  background:
+    linear-gradient(90deg,
+      #075197 0%,
+      #0b5da4 48%,
+      #2172ad 100%);
+}
+
+
+/* Railway track effect */
+
+.hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 600px;
+  height: 300px;
+
+  right: -120px;
+  bottom: -180px;
+
+  border: 5px solid rgba(255, 255, 255, 0.12);
+
+  transform: rotate(-18deg);
+
+  border-radius: 50%;
+}
+
+
+/* Hero text */
+
+.hero-text {
+  position: relative;
+
+  z-index: 5;
+}
+
+.hero-text h2 {
+  color: white;
+
+  font-size: 36px;
+
+  margin-bottom: 10px;
+}
+
+.hero-text p {
+  color: #dcecfb;
+
+  font-size: 15px;
+
+  max-width: 550px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================
+   SEARCH PANEL
+===================================== */
+
+.search-panel {
+  position: relative;
+
+  z-index: 10;
+
+  margin-top: 24px;
+
+  width: 700px;
+
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 17px 22px 16px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+
+  max-width: 100%;
+}
+
+
+/* Tabs */
+
+.search-tabs {
+  display: flex;
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+}
+
+.search-tabs button {
+  border: none;
+
+  background: #edf1f5;
+
+  color: #52677f;
+
+  padding: 10px 25px;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+
+  font-size: 13px;
+}
+
+.search-tabs .selected {
+  background: #0874d5;
+
+  color: white;
+
+  box-shadow: 0 3px 8px rgba(8, 116, 213, 0.25);
+}
+
+
+/* Input + button */
+
+.search-row {
+  display: flex;
+
+  gap: 14px;
+
+  max-width: 100%;
+}
+
+.search-input {
+  height: 50px;
+
+  flex: 1;
+
+  border: 1px solid #dce3eb;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 13px;
+
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.search-input span {
+  margin-right: 10px;
+
+  font-size: 18px;
+}
+
+.search-input input {
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  width: 100%;
+
+  height: 100%;
+
+  font-size: 16px;
+
+  color: #314d6b;
+
+  padding: 0;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.search-input input:focus {
+  outline: none;
+  background: transparent;
+}
+
+.search-input input::placeholder {
+  color: #8a98a8;
+  opacity: 1;
+}
+
+
+/* Search Button */
+
+.search-btn {
+  width: 125px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #0874d5;
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  box-shadow: 0 4px 8px rgba(8, 116, 213, 0.2);
+
+  transition: 0.2s;
+}
+
+.search-btn:hover {
+  background: #075eae;
+
+  transform: translateY(-1px);
+}
+
+
+/* =====================================
+   POPULAR TRAINS
+===================================== */
+
+.popular-trains {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 13px;
+
+  flex-wrap: wrap;
+}
+
+.popular-trains span {
+  font-size: 13px;
+
+  color: #526a83;
+
+  margin-right: 3px;
+}
+
+.popular-trains button {
+  border: none;
+
+  background: #edf5ff;
+
+  color: #1768ae;
+
+  border-radius: 6px;
+
+  padding: 6px 13px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.popular-trains button:hover {
+  background: #dcecff;
+}
+
+/* =====================================
+   REAL TRAIN IMAGE
+===================================== */
+
+.train-image {
+  position: absolute;
+
+  right: -10px;
+  bottom: -20px;
+
+  width: 430px;
+  height: 330px;
+
+  z-index: 3;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  pointer-events: none;
+}
+
+.train-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  mix-blend-mode: multiply;
+
+  filter:
+    brightness(1.05) contrast(1.05);
+
+  -webkit-mask-image:
+    linear-gradient(to left,
+      black 70%,
+      transparent 100%);
+
+  mask-image:
+    linear-gradient(to left,
+      black 70%,
+      transparent 100%);
+}
+
+/* =====================================
+   SERVICES
+===================================== */
+
+.services {
+  background: white;
+
+  padding: 16px 15px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 10px;
+
+  border-left: 1px solid #dfe5ec;
+  border-right: 1px solid #dfe5ec;
+  border-bottom: 1px solid #dfe5ec;
+}
+
+
+.service-card {
+  height: 110px;
+
+  border: 1px solid #e1e7ee;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+
+  transition: 0.2s;
+}
+
+.service-card:hover {
+  border-color: #b9d3ed;
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.08);
+
+  transform: translateY(-2px);
+}
+
+.service-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #eaf3ff;
+
+  border-radius: 8px;
+
+  font-size: 20px;
+
+  margin-bottom: 7px;
+}
+
+.service-card h3 {
+  font-size: 13px;
+
+  color: #253f5e;
+}
+
+.service-card p {
+  margin-top: 5px;
+
+  color: #718096;
+
+  font-size: 11px;
+}
+
+.cancellation .service-icon {
+  background: #fff0f0;
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 1000px) {
+
+  .main-nav {
+    gap: 25px;
+  }
+
+  .train-image {
+    opacity: 0.25;
+
+    right: -30px;
+  }
+
+  .search-panel {
+    width: 65%;
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .top-header {
+    height: 80px;
+
+    padding: 0 15px;
+  }
+
+  .railway-ministry {
+    width: auto;
+  }
+
+  .railway-ministry h3,
+  .railway-ministry p {
+    display: none;
+  }
+
+  .ntes-title h1 {
+    font-size: 15px;
+  }
+
+  .ntes-title p {
+    font-size: 11px;
+  }
+
+  .g20 {
+    display: none;
+  }
+
+  .main-nav {
+    overflow-x: auto;
+
+    gap: 25px;
+
+    padding-left: 15px;
+
+    white-space: nowrap;
+  }
+
+  .hero {
+    height: auto;
+
+    min-height: 470px;
+
+    padding: 35px 20px;
+  }
+
+  .hero-text h2 {
+    font-size: 30px;
+  }
+
+  .search-panel {
+    width: 100%;
+  }
+
+  .train-image {
+    display: none;
+  }
+
+  .services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-btn {
+    width: 100%;
+    height: 48px;
+  }
+
+  .services {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* =====================================
+   TRAIN STATUS
+===================================== */
+
+.train-status {
+  background: white;
+
+  margin: 25px auto;
+
+  width: 92%;
+  max-width: 1200px;
+
+  border: 1px solid #dce4ed;
+  border-radius: 12px;
+
+  padding: 25px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Status Header */
+
+.status-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #e5eaf0;
+}
+
+.status-header h2 {
+  color: #174d91;
+
+  font-size: 22px;
+
+  margin-top: 10px;
+}
+
+.status-header p {
+  color: #6b7d91;
+
+  margin-top: 6px;
+
+  font-size: 14px;
+}
+
+
+.status-badge {
+  display: inline-block;
+
+  background: #e8f7ee;
+
+  color: #178044;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+}
+
+
+.close-status {
+  border: none;
+
+  background: #f1f4f7;
+
+  color: #5d6d7e;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  font-size: 15px;
+}
+
+.close-status:hover {
+  background: #e5eaf0;
+}
+
+
+/* Status boxes */
+
+.status-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.status-box {
+  background: #f7faff;
+
+  border: 1px solid #e1e9f2;
+
+  border-radius: 9px;
+
+  padding: 18px;
+}
+
+.status-box span,
+.eta-section span {
+  display: block;
+
+  color: #718096;
+
+  font-size: 12px;
+
+  margin-bottom: 8px;
+}
+
+.status-box strong {
+  color: #24496f;
+
+  font-size: 15px;
+}
+
+.status-box .delay {
+  color: #d87917;
+}
+
+
+/* ETA */
+
+.eta-section {
+  display: flex;
+
+  gap: 60px;
+
+  margin-top: 20px;
+
+  padding: 20px;
+
+  background: #eef6ff;
+
+  border-radius: 9px;
+}
+
+.eta-section strong {
+  display: block;
+
+  color: #0874d5;
+
+  font-size: 24px;
+}
+
+
+.last-updated {
+  margin-top: 15px;
+
+  color: #8997a7;
+
+  font-size: 11px;
+
+  text-align: right;
+}
+
+
+/* Mobile */
+
+@media (max-width: 750px) {
+
+  .status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .eta-section {
+    gap: 25px;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .eta-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .status-header h2 {
+    font-size: 17px;
+  }
+
+}
+
+/* =====================================
+   ROUTE TIMELINE
+===================================== */
+
+.route-section {
+  margin-top: 25px;
+
+  border-top: 1px solid #e5eaf0;
+
+  padding-top: 22px;
+}
+
+.route-title {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.route-title h3 {
+  color: #174d91;
+
+  font-size: 18px;
+}
+
+.route-title span {
+  color: #7b8998;
+
+  font-size: 12px;
+}
+
+
+/* Timeline */
+
+.route-timeline {
+  position: relative;
+
+  padding-left: 18px;
+}
+
+.route-stop {
+  position: relative;
+
+  display: flex;
+
+  min-height: 75px;
+}
+
+
+/* Marker */
+
+.route-marker {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  background: #e8edf3;
+
+  border: 3px solid white;
+
+  box-shadow: 0 0 0 1px #cbd6e2;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #7c8b9b;
+
+  font-size: 14px;
+
+  flex-shrink: 0;
+
+  z-index: 2;
+}
+
+
+/* Completed / Departed / Passed (Green Point) */
+
+.route-stop.completed .route-marker,
+.route-stop.departed .route-marker,
+.route-stop.passed .route-marker {
+  background: #16a34a;
+  border: 3px solid #ffffff;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 0 2px #16a34a;
+}
+
+
+/* Current (Blue Point with live indicator) */
+
+.route-stop.current .route-marker {
+  background: #0874d5;
+  border: 3px solid #ffffff;
+  color: white;
+
+  width: 38px;
+  height: 38px;
+
+  margin-left: -3px;
+
+  box-shadow:
+    0 0 0 4px #dceeff,
+    0 0 0 5px #0874d5;
+}
+
+
+/* Upcoming / Next Stations (Grey Point) */
+
+.route-stop.upcoming .route-marker {
+  background: white;
+  border: 3px solid #cbd6e2;
+  color: #7c8b9b;
+}
+
+
+/* Connecting line */
+
+.route-line {
+  position: absolute;
+
+  left: 15px;
+
+  top: 32px;
+
+  width: 2px;
+
+  height: 75px;
+
+  background: #d8e0e9;
+}
+
+.route-stop.completed .route-line,
+.route-stop.departed .route-line,
+.route-stop.passed .route-line {
+  background: #16a34a;
+}
+
+.route-stop.current .route-line {
+  background: #d8e0e9;
+}
+
+.route-stop.upcoming .route-line {
+  background: #d8e0e9;
+}
+
+
+/* Station information */
+
+.station-info {
+  padding-left: 18px;
+
+  padding-top: 4px;
+
+  padding-bottom: 20px;
+}
+
+.station-name {
+  color: #294d70;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+.route-stop.current .station-name {
+  color: #0874d5;
+
+  font-weight: 700;
+}
+
+
+.current-label {
+  display: inline-block;
+
+  margin-left: 10px;
+
+  padding: 3px 8px;
+
+  background: #e8f3ff;
+
+  color: #0874d5;
+
+  border-radius: 10px;
+
+  font-size: 9px;
+
+  font-weight: bold;
+}
+
+
+/* Times */
+
+.station-times {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  letter-spacing: 0.1px;
+  line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.15s ease;
+}
+
+.scheduled-badge {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+}
+
+.scheduled-badge .time-label {
+  color: #64748b;
+  font-weight: 500;
+  font-size: 11px;
+}
+
+.scheduled-badge .time-val {
+  color: #1e293b;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+
+.predicted-badge {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  color: #0369a1;
+}
+
+.predicted-badge .time-label {
+  color: #0284c7;
+  font-weight: 500;
+  font-size: 11px;
+}
+
+.predicted-badge .predicted-time {
+  color: #0284c7 !important;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .route-title {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .station-times {
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+}
+
+
+/* =====================================
+   DYNAMIC ETA FORECAST
+===================================== */
+
+.prediction-section {
+  margin-top: 25px;
+
+  padding: 22px;
+
+  background: #f8fbff;
+
+  border: 1px solid #dce8f5;
+
+  border-radius: 10px;
+}
+
+.prediction-heading {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.prediction-heading h3 {
+  color: #174d91;
+
+  font-size: 18px;
+}
+
+.prediction-heading p {
+  color: #7b8998;
+
+  font-size: 12px;
+
+  margin-top: 5px;
+}
+
+.ai-badge {
+  background: #e8f3ff;
+
+  color: #0874d5;
+
+  padding: 6px 10px;
+
+  border-radius: 15px;
+
+  font-size: 10px;
+
+  font-weight: bold;
+}
+
+
+/* Prediction cards */
+
+.prediction-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 40px 1fr 1fr;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.prediction-time,
+.prediction-delay {
+  background: white;
+
+  border: 1px solid #e1e8f0;
+
+  border-radius: 8px;
+
+  padding: 16px;
+}
+
+.prediction-time span,
+.prediction-delay span {
+  display: block;
+
+  color: #7b8998;
+
+  font-size: 11px;
+
+  margin-bottom: 7px;
+}
+
+.prediction-time strong {
+  color: #526a83;
+
+  font-size: 22px;
+}
+
+.prediction-time.predicted strong {
+  color: #0874d5;
+}
+
+.prediction-delay strong {
+  color: #d87917;
+
+  font-size: 20px;
+}
+
+.prediction-arrow {
+  text-align: center;
+
+  font-size: 25px;
+
+  color: #0874d5;
+}
+
+
+/* Confidence */
+
+.confidence-bar {
+  margin-top: 20px;
+}
+
+.confidence-info {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+}
+
+.confidence-info span {
+  color: #68798b;
+
+  font-size: 12px;
+}
+
+.confidence-info strong {
+  color: #0874d5;
+
+  font-size: 13px;
+}
+
+.progress {
+  width: 100%;
+
+  height: 8px;
+
+  background: #e1e8f0;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+
+  background: #0874d5;
+
+  border-radius: 10px;
+
+  transition: width 0.5s ease;
+}
+
+
+/* Reason */
+
+.prediction-reason {
+  margin-top: 18px;
+
+  padding: 13px 15px;
+
+  background: white;
+
+  border-left: 4px solid #0874d5;
+
+  border-radius: 5px;
+}
+
+.prediction-reason span {
+  color: #526a83;
+
+  font-size: 11px;
+
+  font-weight: bold;
+}
+
+.prediction-reason p {
+  color: #68798b;
+
+  font-size: 12px;
+
+  margin-top: 5px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 750px) {
+
+  .prediction-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .prediction-arrow {
+    display: none;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .prediction-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prediction-heading {
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+}
+
+/* =====================================
+   WEBSITE ANIMATIONS
+===================================== */
+
+/* Hero entrance */
+
+.hero-text {
+  animation: heroTextIn 0.8s ease-out;
+}
+
+.search-panel {
+  animation: searchPanelIn 0.8s ease-out 0.15s both;
+}
+
+.train-image {
+  animation: trainIn 1s ease-out 0.2s both;
+}
+
+
+@keyframes heroTextIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes searchPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes trainIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* =====================================
+   SERVICE CARD ANIMATION
+===================================== */
+
+.service-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.10);
+
+  border-color: #b9d3ed;
+}
+
+.service-icon {
+  transition: transform 0.25s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.1);
+}
+
+
+/* =====================================
+   TRAIN STATUS ANIMATION
+===================================== */
+
+.train-status {
+  animation: statusIn 0.5s ease-out;
+}
+
+@keyframes statusIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =====================================
+   ETA FORECAST ANIMATION
+===================================== */
+
+.prediction-section {
+  animation: predictionIn 0.6s ease-out 0.15s both;
+}
+
+@keyframes predictionIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =====================================
+   CONFIDENCE BAR ANIMATION
+===================================== */
+
+.progress-fill {
+  animation: confidenceFill 1.2s ease-out;
+}
+
+@keyframes confidenceFill {
+  from {
+    width: 0 !important;
+  }
+}
+
+
+/* =====================================
+   BUTTON PRESS
+===================================== */
+
+.search-btn:active {
+  transform: scale(0.97);
+}
+
+.popular-trains button:active {
+  transform: scale(0.95);
+}
+
+
+/* LIVE TRAIN INDICATOR */
+
+.route-marker {
+  position: relative;
+}
+
+.train-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  animation: trainPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes trainPulse {
+
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+
+  50% {
+    transform: translateY(-50%) scale(1.12);
+  }
+}
+
+/* ================================
+   NAVIGATION
+================================ */
+
+.main-nav {
+  position: relative;
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 24px;
+  background: #f8fafc;
+  border-left: 1px solid #dfe5ec;
+  border-right: 1px solid #dfe5ec;
+  border-bottom: 1px solid #dfe5ec;
+  overflow-x: auto;
+}
+
+.main-nav button {
+  position: relative;
+  border: none;
+  background: transparent;
+  color: #174b84;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 22px;
+  min-height: 56px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.main-nav button:hover {
+  background: #eaf3fc;
+  color: #0873d1;
+}
+
+.main-nav button.nav-active {
+  background: #e8f2fc;
+  color: #0873d1;
+}
+
+.main-nav button.nav-active::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 0;
+  height: 3px;
+  background: #1476d4;
+  border-radius: 3px 3px 0 0;
+}
+
+.main-nav button:focus {
+  outline: none;
+}
+
+
+
+/* ============================= */
+/* LIVE TRAIN STATUS PAGE */
+/* ============================= */
+
+.live-status-page {
+  background: #f4f7fa;
+  padding: 45px 7%;
+  min-height: 700px;
+}
+
+.live-status-container {
+  max-width: 1250px;
+  margin: auto;
+}
+
+.live-status-header {
+  background: white;
+  border: 1px solid #d8dee6;
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.live-label {
+  color: #16803c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.live-status-header h1 {
+  margin: 10px 0 5px;
+  color: #173f67;
+  font-size: 28px;
+}
+
+.live-status-header p {
+  margin: 0;
+  color: #65758a;
+  font-size: 16px;
+}
+
+.running-badge {
+  background: #e8f7ee;
+  color: #16803c;
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* Information cards */
+
+/* =====================================
+   LIVE STATUS INFO CARDS
+===================================== */
+
+.live-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.live-info-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #d8dee6;
+  border-radius: 8px;
+  padding: 22px 20px 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.live-info-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #174d91;
+}
+
+.live-info-card:nth-child(2)::before {
+  background: #6366f1;
+}
+
+.live-info-card:nth-child(3)::before {
+  background: #d97706;
+}
+
+.live-info-card:nth-child(4)::before {
+  background: #16803c;
+}
+
+.live-info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+.live-info-card span {
+  display: block;
+  color: #728196;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  margin-bottom: 10px;
+}
+
+.live-info-card strong {
+  display: block;
+  color: #173f67;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.live-info-card .delay-text {
+  color: #d97706 !important;
+}
+
+@media (max-width: 900px) {
+  .live-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .live-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+
+.live-info-card span {
+  display: block;
+  color: #728196;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.live-info-card strong {
+  color: #173f67;
+  font-size: 18px;
+}
+
+.delay-text {
+  color: #d97706 !important;
+}
+
+/* Map */
+
+.live-map-card {
+  background: white;
+  border: 1px solid #d8dee6;
+  border-radius: 6px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.map-heading {
+  padding: 18px 24px;
+  border-bottom: 1px solid #e1e6eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.map-heading h2 {
+  margin: 0;
+  color: #173f67;
+  font-size: 20px;
+}
+
+.map-heading span {
+  color: #16803c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.map-placeholder {
+  height: 430px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+    repeating-linear-gradient(45deg,
+      #dce7d8 0,
+      #dce7d8 2px,
+      #e7eee4 2px,
+      #e7eee4 35px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-message {
+  text-align: center;
+}
+
+.map-train-icon {
+  font-size: 55px;
+  margin-bottom: 10px;
+}
+
+.map-message h3 {
+  color: #173f67;
+  margin: 5px 0;
+  font-size: 24px;
+}
+
+.map-message p {
+  color: #65758a;
+}
+
+.map-route-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.map-route-line span {
+  font-size: 20px;
+  color: #145da0;
+}
+
+.map-route-line div {
+  width: 100px;
+  height: 4px;
+  background: #145da0;
+}
+
+/* Details */
+
+.live-details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.live-details div {
+  background: white;
+  border: 1px solid #d8dee6;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.live-details span {
+  display: block;
+  color: #728196;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.live-details strong {
+  color: #173f67;
+  font-size: 17px;
+}
+
+.live-updated {
+  text-align: right;
+  color: #7a8796;
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+.live-loading,
+.live-error {
+  background: white;
+  padding: 50px;
+  text-align: center;
+  color: #173f67;
+  border: 1px solid #d8dee6;
+  border-radius: 6px;
+}
+
+
+/* Live train marker on map */
+.train-map-icon {
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35));
+}
+
+@keyframes liveTrainPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+/* Hide Google Translate default UI */
+#google_translate_element {
+  display: none !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+.goog-te-menu-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
+
+/* =====================================
+   PROFESSIONAL TRAIN STATUS HEADER
+===================================== */
+
+.train-heading {
+  flex: 1;
+}
+
+.status-top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.running-text {
+  color: #16803c;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-header h2 {
+  margin-top: 9px;
+  margin-bottom: 5px;
+}
+
+.status-header p span {
+  color: #0874d5;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.delay-highlight {
+  min-width: 140px;
+  padding: 10px 16px;
+  margin-right: 18px;
+  background: #fffcf5;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(217, 119, 6, 0.05);
+}
+
+.delay-highlight span {
+  display: block;
+  color: #9a6b32;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 3px;
+}
+
+.delay-highlight strong {
+  display: inline-block;
+  color: #b45309;
+  background: #fef3c7;
+  padding: 2px 10px;
+  border-radius: 6px;
+  border: 1px solid #fde68a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =====================================
+   PROFESSIONAL STATUS BOXES
+===================================== */
+
+.status-box {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.status-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(23, 77, 145, 0.10);
+}
+
+.status-box span {
+  font-weight: 600;
+}
+
+.current-box {
+  border-left: 4px solid #16803c;
+}
+
+.next-box {
+  border-left: 4px solid #0874d5;
+}
+
+.delay-box {
+  border-left: 4px solid #f59e0b;
+  background: linear-gradient(135deg, #ffffff 0%, #fffdfa 100%);
+}
+
+.status-box strong.delay,
+.status-box .delay {
+  display: inline-block;
+  background: #fef3c7;
+  color: #b45309;
+  padding: 2px 9px;
+  border-radius: 6px;
+  border: 1px solid #fde68a;
+  font-size: 14px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.platform-box {
+  border-left: 4px solid #6b7280;
+}
+
+.status-box strong {
+  display: block;
+  margin-top: 4px;
+}
+
+/* Delay & ETA Highlights Across All Pages */
+
+.delay-text {
+  display: inline-block;
+  background: #fef3c7;
+  color: #b45309 !important;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1px solid #fde68a;
+  width: fit-content;
+}
+
+.live-info-card small.live-eta-highlight {
+  display: inline-block;
+  margin-top: 6px;
+  background: #f0f9ff;
+  color: #0369a1;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid #bae6fd;
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.overlay-delay {
+  display: inline-block;
+  background: #fef3c7;
+  color: #b45309;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-weight: 700;
+  border: 1px solid #fde68a;
+}
+
+.schedule-time-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
+.schedule-time-badge.departure {
+  background: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.schedule-time-badge.arrival {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+/* =====================================
+   SCROLLABLE TRAIN ROUTE
+===================================== */
+
+.route-timeline {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Scrollbar */
+.route-timeline::-webkit-scrollbar {
+  width: 6px;
+}
+
+.route-timeline::-webkit-scrollbar-thumb {
+  background: #b8c7d9;
+  border-radius: 10px;
+}
+
+.route-timeline::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+
+/* =====================================
+   LIVE TRAIN STATUS - DARK MODE
+===================================== */
+
+.website.dark-mode .live-status-page {
+  background: #111827;
+}
+
+.website.dark-mode .live-status-header,
+.website.dark-mode .live-info-card,
+.website.dark-mode .live-map-card,
+.website.dark-mode .live-details div,
+.website.dark-mode .live-loading,
+.website.dark-mode .live-error {
+  background: #172033;
+  border-color: #2d3a4f;
+}
+
+.website.dark-mode .live-status-header h1,
+.website.dark-mode .map-heading h2,
+.website.dark-mode .live-info-card strong,
+.website.dark-mode .live-details strong,
+.website.dark-mode .map-message h3 {
+  color: #e5efff;
+}
+
+.website.dark-mode .live-status-header p,
+.website.dark-mode .live-info-card span,
+.website.dark-mode .live-details span,
+.website.dark-mode .map-message p,
+.website.dark-mode .live-updated {
+  color: #aebbd0;
+}
+
+.website.dark-mode .map-heading {
+  border-color: #2d3a4f;
+}
+
+
+/* =====================================
+   LIVE TRAIN SEARCH
+===================================== */
+
+.live-search-box {
+  background: #ffffff;
+  border: 1px solid #d8dee6;
+  padding: 14px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.live-search-box input {
+  flex: 1;
+  height: 44px;
+
+  /* Fix black background */
+  background: #ffffff !important;
+  color: #243b53 !important;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  padding: 0 15px;
+
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.live-search-box input::placeholder {
+  color: #8a98a8;
+}
+
+.live-search-box input:focus {
+  border-color: #174d91;
+  box-shadow: 0 0 0 2px rgba(23, 77, 145, 0.08);
+}
+
+.live-search-box button {
+  height: 44px;
+  padding: 0 30px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #174d91;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  transition: 0.2s ease;
+}
+
+.live-search-box button:hover {
+  background: #123f78;
+}
+
+.refresh-live-btn {
+  height: 42px;
+  padding: 0 22px;
+  border: 1px solid #174d91;
+  border-radius: 4px;
+  background: white;
+  color: #174d91;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.refresh-live-btn:hover {
+  background: #eef5ff;
+}
+
+.refresh-live-btn {
+  height: 42px;
+  padding: 0 22px;
+  border: 1px solid #174d91;
+  border-radius: 4px;
+  background: white;
+  color: #174d91;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.refresh-live-btn:hover {
+  background: #eef5ff;
+}
+
+.refresh-live-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.refresh-icon {
+  display: inline-block;
+  font-size: 19px;
+}
+
+.refresh-live-btn.refreshing .refresh-icon {
+  animation: refreshRotate 0.8s linear infinite;
+}
+
+@keyframes refreshRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+/* =====================================
+   LIVE STATUS - PROFESSIONAL HEADER
+===================================== */
+
+.live-status-header {
+  padding: 28px 32px;
+  background: #ffffff;
+  border: 1px solid #d8dee6;
+  border-radius: 8px;
+}
+
+.live-header-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.live-label {
+  display: flex !important;
+  align-items: center;
+  gap: 7px;
+  margin: 0 !important;
+  color: #16803c !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.live-dot,
+.running-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16803c;
+  display: inline-block;
+  box-shadow: 0 0 0 4px rgba(22, 128, 60, 0.10);
+}
+
+.live-updating-text {
+  color: #8290a0;
+  font-size: 12px;
+  padding-left: 14px;
+  border-left: 1px solid #dce2e8;
+}
+
+.live-status-header h1 {
+  margin: 14px 0 8px;
+  color: #173f67;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.train-name-separator {
+  margin: 0 8px;
+  color: #8a98a8;
+  font-weight: 400;
+}
+
+.train-route {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #65758a;
+  font-size: 15px;
+}
+
+.route-arrow {
+  color: #174d91;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.running-badge {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 17px;
+  background: #e8f7ee;
+  color: #16803c;
+  border: 1px solid #ccebd8;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.running-dot {
+  width: 7px;
+  height: 7px;
+  box-shadow: none;
+}
+
+
+
+
+/* =====================================
+   LIVE MAP HEADER
+===================================== */
+
+.map-heading {
+  padding: 18px 24px;
+  border-bottom: 1px solid #e1e6eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.map-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.map-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef5ff;
+  border-radius: 6px;
+  font-size: 20px;
+}
+
+.map-title h2 {
+  margin: 0;
+  color: #173f67;
+  font-size: 19px;
+}
+
+.map-title p {
+  margin: 0;
+  color: #7a8796;
+  font-size: 12px;
+}
+
+.map-live-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: #e8f7ee;
+  border: 1px solid #ccebd8;
+  border-radius: 4px;
+  color: #16803c;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.map-live-dot {
+  width: 7px;
+  height: 7px;
+  background: #16803c;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+
+
+/* =====================================
+   MAP LIVE POSITION PANEL
+===================================== */
+
+.map-location-overlay {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 1000;
+
+  width: 265px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #d7e0e9;
+  border-radius: 8px;
+
+  box-shadow: 0 8px 25px rgba(15, 35, 60, 0.18);
+
+  overflow: hidden;
+}
+
+.overlay-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 11px 14px;
+
+  border-bottom: 1px solid #e5eaf0;
+}
+
+.overlay-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16803c;
+
+  box-shadow: 0 0 0 4px rgba(22, 128, 60, 0.12);
+
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
+.overlay-label {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+.overlay-live-text {
+  margin-left: auto;
+  color: #16803c;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.overlay-station {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 15px 14px 13px;
+}
+
+.overlay-location-icon {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef5ff;
+  border-radius: 50%;
+
+  font-size: 16px;
+}
+
+.overlay-station strong {
+  display: block;
+  color: #173f67;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.overlay-station small {
+  display: block;
+  margin-top: 3px;
+  color: #8492a3;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.overlay-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  border-top: 1px solid #e5eaf0;
+}
+
+.overlay-stats>div {
+  padding: 11px 14px;
+}
+
+.overlay-stats>div+div {
+  border-left: 1px solid #e5eaf0;
+}
+
+.overlay-stats span {
+  display: block;
+  color: #8492a3;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.overlay-stats strong {
+  color: #173f67;
+  font-size: 13px;
+}
+
+.overlay-stats .overlay-delay {
+  color: #d97706;
+}
+
+@keyframes livePulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(22, 128, 60, 0.10);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(22, 128, 60, 0.18);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   FINAL LIVE MAP + LOCATION PANEL
+========================================= */
+
+/* Keep the overlay INSIDE the map */
+.real-map {
+  position: relative;
+  height: 430px;
+  overflow: hidden;
+}
+
+/* Remove map section borders */
+.live-map-card {
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(20, 50, 80, 0.08);
+}
+
+.map-heading {
+  border-bottom: none !important;
+}
+
+/* =========================================
+   FLOATING CURRENT POSITION PANEL
+========================================= */
+
+.map-location-overlay {
+  position: absolute !important;
+
+  left: 18px !important;
+  bottom: 18px !important;
+
+  width: 310px !important;
+  min-width: 0 !important;
+
+  background: rgba(255, 255, 255, 0.96) !important;
+
+  border: none !important;
+  border-radius: 14px !important;
+
+  box-shadow:
+    0 12px 35px rgba(20, 50, 80, 0.20) !important;
+
+  overflow: hidden !important;
+
+  z-index: 1000 !important;
+}
+
+/* Top section */
+.overlay-top {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+
+  padding: 12px 16px !important;
+
+  background: linear-gradient(135deg,
+      #eefbf4,
+      #ffffff) !important;
+
+  border: none !important;
+}
+
+/* Green live dot */
+.overlay-live-dot {
+  width: 8px !important;
+  height: 8px !important;
+
+  flex-shrink: 0;
+
+  border-radius: 50% !important;
+
+  background: #16803c !important;
+
+  box-shadow:
+    0 0 0 5px rgba(22, 128, 60, 0.10) !important;
+
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
+.overlay-label {
+  color: #58718c !important;
+
+  font-size: 11px !important;
+  font-weight: 800 !important;
+
+  letter-spacing: 0.7px !important;
+
+  margin: 0 !important;
+}
+
+.overlay-live-text {
+  margin-left: auto !important;
+
+  color: #16803c !important;
+
+  font-size: 10px !important;
+  font-weight: 800 !important;
+}
+
+/* =========================================
+   STATION INFORMATION
+========================================= */
+
+.overlay-station {
+  display: flex !important;
+  align-items: center !important;
+
+  gap: 13px !important;
+
+  padding: 17px 18px !important;
+
+  border: none !important;
+}
+
+.overlay-location-icon {
+  width: 42px !important;
+  height: 42px !important;
+
+  flex-shrink: 0;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: #eef5ff !important;
+
+  border-radius: 50% !important;
+
+  font-size: 20px !important;
+}
+
+.overlay-station strong {
+  display: block !important;
+
+  color: #173f67 !important;
+
+  font-size: 17px !important;
+  font-weight: 700 !important;
+
+  line-height: 1.25 !important;
+
+  margin: 0 !important;
+}
+
+.overlay-station small {
+  display: block !important;
+
+  color: #7b8da2 !important;
+
+  font-size: 11px !important;
+
+  margin-top: 4px !important;
+}
+
+/* =========================================
+   DELAY + DISTANCE
+========================================= */
+
+.overlay-stats {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+
+  border: none !important;
+
+  background: #f8fafc !important;
+}
+
+.overlay-stats>div {
+  padding: 13px 18px !important;
+
+  border: none !important;
+}
+
+.overlay-stats>div+div {
+  border-left: 1px solid #e7edf3 !important;
+}
+
+.overlay-stats span {
+  display: block !important;
+
+  color: #8392a5 !important;
+
+  font-size: 9px !important;
+  font-weight: 800 !important;
+
+  letter-spacing: 0.6px !important;
+
+  margin-bottom: 5px !important;
+}
+
+.overlay-stats strong {
+  color: #173f67 !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.overlay-stats .overlay-delay {
+  color: #d97706 !important;
+}
+
+/* Live pulse */
+@keyframes livePulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(22, 128, 60, 0.10);
+  }
+
+  50% {
+    box-shadow: 0 0 0 7px rgba(22, 128, 60, 0.18);
+  }
+}
+
+
+
+
+
+
+/* =========================================
+   COMPACT LIVE POSITION PANEL
+========================================= */
+
+.map-location-overlay {
+  width: 245px !important;
+  left: 16px !important;
+  bottom: 16px !important;
+  border-radius: 11px !important;
+}
+
+/* Smaller top section */
+.overlay-top {
+  padding: 9px 12px !important;
+}
+
+.overlay-label {
+  font-size: 9px !important;
+}
+
+.overlay-live-text {
+  font-size: 9px !important;
+}
+
+/* Smaller station section */
+.overlay-station {
+  gap: 10px !important;
+  padding: 12px !important;
+}
+
+.overlay-location-icon {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 16px !important;
+}
+
+.overlay-station strong {
+  font-size: 14px !important;
+}
+
+.overlay-station small {
+  font-size: 9px !important;
+  margin-top: 2px !important;
+}
+
+/* Smaller stats */
+.overlay-stats>div {
+  padding: 9px 12px !important;
+}
+
+.overlay-stats span {
+  font-size: 8px !important;
+  margin-bottom: 3px !important;
+}
+
+.overlay-stats strong {
+  font-size: 12px !important;
+}
+
+
+
+
+
+
+/* =========================================
+   MINI JOURNEY PROGRESS
+========================================= */
+
+.mini-journey-progress {
+  padding: 12px 14px 14px;
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+}
+
+.mini-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+.mini-progress-header span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #64748b;
+}
+
+.mini-progress-header strong {
+  font-size: 13px;
+  color: #1769aa;
+}
+
+.mini-progress-track {
+  position: relative;
+  height: 5px;
+  background: #dbe2e8;
+  border-radius: 10px;
+}
+
+.mini-progress-fill {
+  height: 100%;
+  background: #1769aa;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.mini-progress-train {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 17px;
+  line-height: 1;
+  transition: left 0.5s ease;
+}
+
+.mini-progress-route {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 10px;
+}
+
+.mini-progress-route span {
+  max-width: 45%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.website.dark-mode .mini-journey-progress {
+  background: #111827;
+  border-top-color: #2d3a4f;
+}
+
+.website.dark-mode .mini-progress-track {
+  background: #374151;
+}
+
+.website.dark-mode .mini-progress-header span,
+.website.dark-mode .mini-progress-route span {
+  color: #9ca3af;
+}
+
+.website.dark-mode .mini-progress-header strong {
+  color: #60a5fa;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   PROFESSIONAL GOVERNMENT-STYLE FOOTER
+   ========================================================= */
+
+.site-footer {
+  width: 100%;
+  background: #123a63;
+  color: #ffffff;
+  border-top: 4px solid #1d73b8;
+  margin-top: 0;
+}
+
+/* Main footer area */
+.footer-main {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 50px 42px;
+
+  display: grid;
+  grid-template-columns: 1.7fr 1fr 1fr 1fr;
+  gap: 55px;
+}
+
+/* Brand section */
+.footer-brand h2 {
+  margin: 0 0 6px;
+  font-size: 25px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.footer-brand h3 {
+  margin: 0 0 18px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #b9d8f2;
+}
+
+.footer-brand p {
+  max-width: 390px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d6e4f0;
+}
+
+/* Footer columns */
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-column h4 {
+  margin: 0 0 18px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 9px;
+}
+
+.footer-column h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 32px;
+  height: 2px;
+  background: #55a9df;
+}
+
+/* Footer buttons */
+.footer-column button {
+  border: none;
+  background: transparent;
+  padding: 6px 0;
+  color: #d5e3ef;
+  font-size: 14px;
+  text-align: left;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.footer-column button:hover {
+  color: #ffffff;
+  padding-left: 5px;
+}
+
+/* Footer bottom bar */
+.footer-bottom {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+  padding: 17px 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  font-size: 12px;
+  color: #b9ccdc;
+}
+
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer-bottom-links span {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer-bottom-links span:hover {
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   FOOTER RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 1000px) {
+  .footer-main {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    padding: 38px 25px;
+    gap: 35px 25px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-bottom {
+    padding: 16px 25px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    padding: 35px 20px;
+  }
+
+  .footer-brand {
+    grid-column: auto;
+  }
+
+  .footer-bottom {
+    padding: 16px 20px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.mobile-search-type {
+  display: none !important;
+}
+
+.mobile-menu-btn {
+  display: none !important;
+}
+
+
+/* =====================================================
+   MOBILE RESPONSIVE FIXES
+   Desktop / Laptop / Tablet remain unchanged
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  /* =========================
+     MOBILE HAMBURGER MENU
+     ========================= */
+
+  .main-nav {
+    position: relative;
+    height: auto;
+    min-height: 52px;
+
+    display: block;
+
+    padding: 0;
+    overflow: visible;
+
+    background: #f8fafc;
+  }
+
+  .mobile-menu-btn {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    margin-left: 12px;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+    display: flex !important;
+  }
+
+  .mobile-menu-btn span {
+    width: 25px;
+    height: 3px;
+
+    background: #174b84;
+
+    border-radius: 3px;
+
+    transition: 0.2s ease;
+  }
+
+  .nav-links {
+    display: none;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    background: white;
+
+    border-top: 1px solid #dfe5ec;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+
+    position: relative;
+    z-index: 100;
+  }
+
+  .main-nav.mobile-open .nav-links {
+    display: flex;
+  }
+
+  .nav-links button {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 12px 18px;
+
+    text-align: left;
+
+    border: none;
+    border-bottom: 1px solid #edf1f5;
+
+    background: white;
+
+    color: #174b84;
+
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .nav-links button.nav-active {
+    background: #e8f2fc;
+    color: #0873d1;
+  }
+
+  .nav-links button.nav-active::after {
+    display: none;
+  }
+
+
+  /* =========================
+     HOME SEARCH
+     ========================= */
+
+  .mobile-search-type {
+    display: block;
+
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid #d5dfeb;
+    border-radius: 8px;
+
+    background: white;
+
+    color: #173f67;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    outline: none;
+    display: block !important;
+  }
+
+  .mobile-search-type:focus {
+    border-color: #0874d5;
+  }
+
+  .search-tabs {
+    display: none;
+  }
+
+
+  /* Remove Popular Trains on phone */
+  .popular-trains {
+    display: none !important;
+  }
+
+
+  /* =========================
+     SERVICES — 2 × 2
+     ========================= */
+
+  .services {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 12px;
+
+    padding: 14px 12px;
+  }
+
+  .service-card {
+    min-width: 0;
+
+    padding: 18px 10px;
+
+    min-height: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .service-icon {
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 10px;
+
+    font-size: 25px;
+  }
+
+  .service-card h3 {
+    font-size: 16px;
+
+    line-height: 1.25;
+
+    margin-bottom: 7px;
+  }
+
+  .service-card p {
+    font-size: 12px;
+
+    line-height: 1.3;
+  }
+
+
+  /* =========================
+     TRAIN STATUS
+     ========================= */
+
+  .train-status {
+    margin: 16px 10px;
+
+    padding: 18px 12px;
+  }
+
+  .status-header {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 12px;
+  }
+
+  .train-heading {
+    text-align: center;
+  }
+
+  .status-top-row {
+    justify-content: center;
+  }
+
+  .status-header h2 {
+    font-size: 21px;
+
+    line-height: 1.25;
+
+    margin-top: 8px;
+  }
+
+  .status-header p {
+    font-size: 14px;
+
+    line-height: 1.4;
+  }
+
+  .delay-highlight {
+    width: 100%;
+
+    min-width: 0;
+
+    margin-right: 0;
+
+    padding: 12px;
+  }
+
+  .delay-highlight span {
+    font-size: 12px;
+  }
+
+  .delay-highlight strong {
+    font-size: 16px;
+  }
+
+  .close-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+
+  /* Location / Next / Delay / Platform
+     2 rows × 2 columns */
+
+  .status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 10px;
+  }
+
+  .status-box {
+    min-width: 0;
+
+    padding: 15px 10px;
+
+    min-height: 105px;
+
+    text-align: center;
+  }
+
+  .status-box span {
+    display: block;
+
+    font-size: 12px;
+
+    line-height: 1.3;
+  }
+
+  .status-box strong {
+    font-size: 15px;
+
+    line-height: 1.3;
+
+    word-break: break-word;
+  }
+
+
+  /* Last updated */
+
+  .last-updated {
+    font-size: 11px;
+
+    text-align: center;
+
+    margin-top: 12px;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   FINAL MOBILE MAP OVERLAY FIX
+   ONLY FOR MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  /* Map must become the positioning parent */
+  .real-map {
+    position: relative !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Mobile map height */
+  .real-map .leaflet-container {
+    height: 320px !important;
+    width: 100% !important;
+  }
+
+
+  /* ==========================================
+     OVERLAY CONTAINER
+     ========================================== */
+
+  .real-map>.map-location-overlay {
+    position: absolute !important;
+
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+
+    top: auto !important;
+
+    width: auto !important;
+    max-width: none !important;
+
+    height: auto !important;
+    max-height: 190px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    border-radius: 14px !important;
+
+    background: rgba(255, 255, 255, 0.96) !important;
+
+    box-shadow:
+      0 5px 20px rgba(0, 0, 0, 0.18) !important;
+
+    z-index: 1000 !important;
+  }
+
+
+  /* ==========================================
+     TOP — CURRENT POSITION
+     ========================================== */
+
+  .map-location-overlay .overlay-top {
+    min-height: 38px !important;
+
+    padding: 9px 12px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    box-sizing: border-box !important;
+  }
+
+  .map-location-overlay .overlay-label {
+    font-size: 10px !important;
+    letter-spacing: 0.6px !important;
+    white-space: nowrap !important;
+  }
+
+  .map-location-overlay .overlay-live-text {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+  }
+
+
+  /* ==========================================
+     STATION
+     ========================================== */
+
+  .map-location-overlay .overlay-station {
+    min-height: 48px !important;
+
+    padding: 7px 12px !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    gap: 9px !important;
+
+    box-sizing: border-box !important;
+  }
+
+  .map-location-overlay .overlay-location-icon {
+    width: 34px !important;
+    height: 34px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    flex-shrink: 0 !important;
+
+    font-size: 18px !important;
+
+    border-radius: 50% !important;
+    background: #eef5ff !important;
+  }
+
+  .map-location-overlay .overlay-station strong {
+    display: block !important;
+
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .map-location-overlay .overlay-station small {
+    display: block !important;
+
+    margin-top: 2px !important;
+
+    font-size: 9px !important;
+  }
+
+
+  /* ==========================================
+     DELAY + DISTANCE
+     ========================================== */
+
+  .map-location-overlay .overlay-stats {
+    display: grid !important;
+
+    grid-template-columns: 1fr 1fr !important;
+
+    width: 100% !important;
+
+    box-sizing: border-box !important;
+
+    border-top: 1px solid #e2e8f0 !important;
+  }
+
+  .map-location-overlay .overlay-stats>div {
+    min-width: 0 !important;
+
+    padding: 7px 5px !important;
+
+    text-align: center !important;
+
+    box-sizing: border-box !important;
+  }
+
+  .map-location-overlay .overlay-stats>div+div {
+    border-left: 1px solid #e2e8f0 !important;
+  }
+
+  .map-location-overlay .overlay-stats span {
+    display: block !important;
+
+    margin-bottom: 2px !important;
+
+    font-size: 8px !important;
+
+    letter-spacing: 0.5px !important;
+  }
+
+  .map-location-overlay .overlay-stats strong {
+    display: block !important;
+
+    font-size: 13px !important;
+
+    line-height: 1.2 !important;
+  }
+
+
+  /* ==========================================
+     JOURNEY PROGRESS
+     ========================================== */
+
+  .map-location-overlay .mini-journey-progress {
+    padding: 7px 12px 9px !important;
+
+    border-top: 1px solid #e2e8f0 !important;
+
+    box-sizing: border-box !important;
+  }
+
+  .map-location-overlay .mini-progress-header {
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    font-size: 9px !important;
+  }
+
+  .map-location-overlay .mini-progress-header strong {
+    font-size: 13px !important;
+  }
+
+  .map-location-overlay .mini-progress-track {
+    height: 5px !important;
+
+    margin-top: 5px !important;
+  }
+
+  .map-location-overlay .mini-progress-train {
+    font-size: 17px !important;
+  }
+
+  .map-location-overlay .mini-progress-route {
+    display: flex !important;
+
+    justify-content: space-between !important;
+
+    margin-top: 4px !important;
+
+    font-size: 8px !important;
+
+    line-height: 1.2 !important;
+
+    gap: 8px !important;
+  }
+
+  .map-location-overlay .mini-progress-route span {
+    max-width: 45% !important;
+
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   TRAIN SCHEDULE PAGE
+   ========================================================= */
+
+.schedule-page {
+  min-height: 700px;
+  background: #f4f7fb;
+  color: #173b68;
+}
+
+
+/* ================= HERO ================= */
+
+.schedule-hero {
+  background: linear-gradient(135deg, #075197, #2172ad);
+  padding: 52px 7% 90px;
+  color: white;
+}
+
+.schedule-hero-content {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.schedule-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.schedule-hero h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.schedule-hero p {
+  font-size: 17px;
+  opacity: 0.9;
+}
+
+
+/* ================= SEARCH SECTION ================= */
+
+.schedule-search-section {
+  max-width: 1250px;
+  margin: -48px auto 0;
+  padding: 0 25px;
+  position: relative;
+  z-index: 5;
+}
+
+.schedule-search-card {
+  background: white;
+  border: 1px solid #dce5ef;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(22, 61, 102, 0.12);
+  padding: 28px;
+}
+
+.schedule-search-title {
+  margin-bottom: 25px;
+}
+
+.schedule-search-title h2 {
+  font-size: 23px;
+  color: #173b68;
+  margin-bottom: 5px;
+}
+
+.schedule-search-title p {
+  color: #6c7d91;
+  font-size: 14px;
+}
+
+
+/* ================= FORM ================= */
+
+.schedule-form {
+  display: grid;
+  grid-template-columns: 1.35fr 45px 1.35fr 1fr 160px;
+  align-items: end;
+  gap: 12px;
+}
+
+.station-field,
+.date-field {
+  position: relative;
+}
+
+.station-field label,
+.date-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #58708d;
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+
+.station-input-wrapper {
+  position: relative;
+}
+
+.station-input-wrapper input,
+.date-field input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid #cbd7e4;
+  border-radius: 7px;
+  background: #fff;
+  color: #173b68;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.station-input-wrapper input {
+  padding: 0 38px 0 42px;
+}
+
+.date-field input {
+  padding: 0 12px;
+}
+
+.station-input-wrapper input:focus,
+.date-field input:focus {
+  border-color: #1671b9;
+  box-shadow: 0 0 0 3px rgba(22, 113, 185, 0.1);
+}
+
+.station-input-wrapper input::placeholder {
+  color: #9aaabd;
+}
+
+.station-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 17px;
+  z-index: 2;
+}
+
+.station-loading {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1671b9;
+  font-weight: 700;
+}
+
+
+/* ================= SWAP ================= */
+
+.schedule-swap-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #cbd7e4;
+  background: white;
+  color: #075197;
+  font-size: 21px;
+  margin-bottom: 5px;
+  transition: 0.2s;
+}
+
+.schedule-swap-btn:hover {
+  background: #075197;
+  color: white;
+  border-color: #075197;
+  transform: rotate(180deg);
+}
+
+
+/* ================= SUGGESTIONS ================= */
+
+.station-suggestions {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #d5e0eb;
+  border-radius: 7px;
+  box-shadow: 0 10px 25px rgba(20, 54, 91, 0.15);
+  overflow: hidden;
+  z-index: 50;
+}
+
+.station-suggestions button {
+  width: 100%;
+  border: none;
+  background: white;
+  padding: 12px 14px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.station-suggestions button:last-child {
+  border-bottom: none;
+}
+
+.station-suggestions button:hover {
+  background: #f2f7fc;
+}
+
+.station-suggestions strong {
+  color: #173b68;
+  font-size: 14px;
+}
+
+.station-suggestions span {
+  color: #1671b9;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ================= SEARCH BUTTON ================= */
+
+.schedule-search-btn {
+  height: 52px;
+  border: none;
+  border-radius: 7px;
+  background: #075197;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.schedule-search-btn:hover {
+  background: #063d73;
+  transform: translateY(-1px);
+}
+
+.schedule-search-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
+/* ================= ERROR ================= */
+
+.schedule-error {
+  margin-top: 18px;
+  padding: 13px 15px;
+  background: #fff4f4;
+  border: 1px solid #f0cccc;
+  border-radius: 7px;
+  color: #a22b2b;
+  font-size: 13px;
+}
+
+
+/* ================= RESULTS ================= */
+
+.schedule-results {
+  max-width: 1250px;
+  margin: 35px auto 70px;
+  padding: 0 25px;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.results-header>div>span {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1671b9;
+  letter-spacing: 1px;
+}
+
+.results-header h2 {
+  margin-top: 5px;
+  font-size: 25px;
+  color: #173b68;
+}
+
+.results-header>strong {
+  font-size: 13px;
+  color: #65788e;
+}
+
+
+/* ================= TRAIN CARD ================= */
+
+.train-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.schedule-train-card {
+  background: white;
+  border: 1px solid #dce5ef;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.schedule-train-card:hover {
+  border-color: #9ebbd6;
+  box-shadow: 0 8px 24px rgba(25, 65, 105, 0.1);
+}
+
+.train-card-top {
+  padding: 18px 22px;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.train-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.train-number {
+  background: #eaf3fb;
+  color: #075197;
+  padding: 6px 9px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.train-identity h3 {
+  color: #173b68;
+  font-size: 17px;
+}
+
+.train-type {
+  margin-left: auto;
+  background: #f1f5f8;
+  color: #63758a;
+  border-radius: 4px;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* ================= ROUTE ================= */
+
+.train-route-summary {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  align-items: center;
+  padding: 24px 22px;
+}
+
+.schedule-time-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-time-block strong {
+  font-size: 26px;
+  color: #173b68;
+}
+
+.schedule-time-block span {
+  margin-top: 5px;
+  color: #6c7d91;
+  font-size: 13px;
+}
+
+.destination-time {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.route-middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.route-duration {
+  color: #60758c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.route-line-display {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  gap: 7px;
+}
+
+.route-line-display span {
+  height: 2px;
+  background: #b9c8d7;
+  flex: 1;
+}
+
+.route-line-display i {
+  font-style: normal;
+  font-size: 17px;
+}
+
+.route-middle small {
+  color: #8998a8;
+  font-size: 11px;
+}
+
+
+/* ================= CARD BOTTOM ================= */
+
+.train-card-bottom {
+  background: #f8fafc;
+  border-top: 1px solid #edf1f5;
+  padding: 12px 22px;
+  display: flex;
+  gap: 25px;
+  color: #66798e;
+  font-size: 12px;
+}
+
+
+/* ================= LOADING ================= */
+
+.schedule-loading-box {
+  background: white;
+  border: 1px solid #dce5ef;
+  border-radius: 10px;
+  padding: 55px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 35px;
+  height: 35px;
+  margin: 0 auto 14px;
+  border: 3px solid #dbe5ef;
+  border-top-color: #075197;
+  border-radius: 50%;
+  animation: scheduleSpin 0.8s linear infinite;
+}
+
+.schedule-loading-box p {
+  color: #66798e;
+  font-size: 14px;
+}
+
+@keyframes scheduleSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ================= DARK MODE ================= */
+
+.dark-mode .schedule-page {
+  background: #0d1724;
+}
+
+.dark-mode .schedule-search-card,
+.dark-mode .schedule-train-card,
+.dark-mode .schedule-loading-box,
+.dark-mode .station-suggestions {
+  background: #152334;
+  border-color: #2b4056;
+}
+
+.dark-mode .schedule-search-title h2,
+.dark-mode .results-header h2,
+.dark-mode .train-identity h3,
+.dark-mode .schedule-time-block strong {
+  color: #f0f5fa;
+}
+
+.dark-mode .schedule-search-title p,
+.dark-mode .schedule-time-block span,
+.dark-mode .results-header>strong,
+.dark-mode .train-card-bottom {
+  color: #9badbf;
+}
+
+.dark-mode .station-input-wrapper input,
+.dark-mode .date-field input {
+  background: #101c2a;
+  border-color: #344b63;
+  color: #f0f5fa;
+}
+
+.dark-mode .station-suggestions button {
+  background: #152334;
+  border-color: #2b4056;
+}
+
+.dark-mode .station-suggestions button:hover {
+  background: #1d3044;
+}
+
+.dark-mode .station-suggestions strong {
+  color: #edf4fa;
+}
+
+.dark-mode .train-card-bottom {
+  background: #101c2a;
+}
+
+.dark-mode .schedule-swap-btn {
+  background: #152334;
+  border-color: #344b63;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+  .schedule-form {
+    grid-template-columns: 1fr 45px 1fr;
+  }
+
+  .date-field {
+    grid-column: 1 / 3;
+  }
+
+  .schedule-search-btn {
+    grid-column: 3;
+  }
+}
+
+@media (max-width: 600px) {
+  .schedule-hero {
+    padding: 35px 20px 75px;
+  }
+
+  .schedule-hero h1 {
+    font-size: 30px;
+  }
+
+  .schedule-search-section,
+  .schedule-results {
+    padding: 0 15px;
+  }
+
+  .schedule-search-card {
+    padding: 20px 15px;
+  }
+
+  .schedule-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .schedule-swap-btn {
+    align-self: center;
+    transform: rotate(90deg);
+  }
+
+  .schedule-swap-btn:hover {
+    transform: rotate(270deg);
+  }
+
+  .date-field,
+  .schedule-search-btn {
+    width: 100%;
+  }
+
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* ===== MOBILE TRAIN ROUTE ===== */
+
+  .train-route-summary {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 22px 16px 18px;
+  }
+
+  .schedule-time-block {
+    min-width: 0;
+  }
+
+  .schedule-time-block strong {
+    font-size: 24px;
+  }
+
+  .schedule-time-block span {
+    font-size: 12px;
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .destination-time {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .route-middle {
+    order: unset;
+    min-width: 105px;
+    gap: 5px;
+  }
+
+  .route-duration {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .route-line-display {
+    width: 100%;
+    gap: 5px;
+  }
+
+  .route-line-display i {
+    font-size: 15px;
+  }
+
+  .route-middle small {
+    font-size: 10px;
+  }
+
+  .schedule-results {
+    margin-top: 28px;
+    margin-bottom: 45px;
+  }
+
+  .results-header h2 {
+    font-size: 21px;
+    line-height: 1.3;
+  }
+
+  .schedule-train-card {
+    border-radius: 9px;
+  }
+
+  .train-card-top {
+    padding: 15px 16px;
+  }
+
+  .train-identity {
+    gap: 8px;
+  }
+
+  .train-number {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .train-identity h3 {
+    font-size: 15px;
+    flex: 1;
+  }
+
+  .train-type {
+    font-size: 10px;
+    padding: 5px 7px;
+  }
+
+  .train-card-bottom {
+    padding: 11px 16px;
+    gap: 9px;
+    font-size: 11px;
+  }
+
+  .train-card-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .train-identity {
+    flex-wrap: wrap;
+  }
+
+  .train-type {
+    margin-left: 0;
+  }
+}
+
+
+
+
+
+/* =========================================================
+   TRAIN SCHEDULE — PREMIUM ANIMATIONS
+   ========================================================= */
+
+
+/* ================= PAGE ENTRANCE ================= */
+
+.schedule-page {
+  animation: schedulePageIn 0.55s ease both;
+}
+
+@keyframes schedulePageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================= HERO ================= */
+
+.schedule-hero-content {
+  animation: heroContentIn 0.7s ease both;
+}
+
+@keyframes heroContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================= SEARCH CARD ================= */
+
+.schedule-search-card {
+  animation: searchCardIn 0.65s ease 0.08s both;
+}
+
+@keyframes searchCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================= INPUT FOCUS ================= */
+
+.station-input-wrapper input,
+.date-field input {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+.station-input-wrapper input:focus,
+.date-field input:focus {
+  transform: translateY(-1px);
+}
+
+
+/* ================= SEARCH BUTTON ================= */
+
+.schedule-search-btn {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.schedule-search-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.55s ease;
+}
+
+.schedule-search-btn:hover::before {
+  left: 140%;
+}
+
+.schedule-search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(7, 81, 151, 0.25);
+}
+
+.schedule-search-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+
+/* ================= SWAP BUTTON ================= */
+
+.schedule-swap-btn {
+  transition:
+    transform 0.35s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.schedule-swap-btn:hover {
+  box-shadow: 0 5px 15px rgba(7, 81, 151, 0.18);
+}
+
+
+/* ================= STATION SUGGESTIONS ================= */
+
+.station-suggestions {
+  animation: suggestionsIn 0.2s ease both;
+  transform-origin: top center;
+}
+
+@keyframes suggestionsIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scaleY(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+.station-suggestions button {
+  transition:
+    background 0.18s ease,
+    padding-left 0.18s ease;
+}
+
+.station-suggestions button:hover {
+  padding-left: 18px;
+}
+
+
+/* ================= RESULTS HEADER ================= */
+
+.results-header {
+  animation: resultsHeaderIn 0.5s ease both;
+}
+
+@keyframes resultsHeaderIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================= TRAIN CARDS ================= */
+
+.schedule-train-card {
+  animation: trainCardIn 0.55s ease both;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.3s ease,
+    border-color 0.25s ease;
+}
+
+.schedule-train-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.schedule-train-card:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.schedule-train-card:nth-child(3) {
+  animation-delay: 0.19s;
+}
+
+.schedule-train-card:nth-child(4) {
+  animation-delay: 0.26s;
+}
+
+.schedule-train-card:nth-child(5) {
+  animation-delay: 0.33s;
+}
+
+.schedule-train-card:nth-child(6) {
+  animation-delay: 0.40s;
+}
+
+.schedule-train-card:nth-child(7) {
+  animation-delay: 0.47s;
+}
+
+.schedule-train-card:nth-child(8) {
+  animation-delay: 0.54s;
+}
+
+@keyframes trainCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================= CARD HOVER ================= */
+
+.schedule-train-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(25, 65, 105, 0.13);
+}
+
+
+/* ================= TRAIN NUMBER ================= */
+
+.train-number {
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.schedule-train-card:hover .train-number {
+  transform: scale(1.04);
+}
+
+
+/* ================= TRAIN ICON ================= */
+
+.route-line-display i {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.schedule-train-card:hover .route-line-display i {
+  transform: translateX(4px);
+}
+
+
+/* ================= ROUTE LINE ================= */
+
+.route-line-display span {
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.schedule-train-card:hover .route-line-display span {
+  transform: scaleX(1.03);
+}
+
+
+/* ================= TRAIN TIME ================= */
+
+.schedule-time-block strong {
+  transition: color 0.2s ease;
+}
+
+.schedule-train-card:hover .schedule-time-block strong {
+  color: #075197;
+}
+
+
+/* ================= BOTTOM INFO ================= */
+
+.train-card-bottom span {
+  transition: transform 0.2s ease;
+}
+
+.schedule-train-card:hover .train-card-bottom span {
+  transform: translateX(2px);
+}
+
+
+/* ================= LOADING ================= */
+
+.loading-spinner {
+  animation:
+    scheduleSpin 0.8s linear infinite,
+    loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+
+/* ================= ERROR ================= */
+
+.schedule-error {
+  animation: errorIn 0.3s ease both;
+}
+
+@keyframes errorIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================= ACCESSIBILITY ================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .schedule-page,
+  .schedule-hero-content,
+  .schedule-search-card,
+  .results-header,
+  .schedule-train-card,
+  .station-suggestions,
+  .schedule-error {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   PREMIUM TRAIN SCHEDULE MOTION
+   ========================================================= */
+
+/* Search card subtle floating effect */
+.schedule-search-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.schedule-search-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 38px rgba(22, 61, 102, 0.15);
+}
+
+
+/* Train route icon movement */
+.route-line-display i {
+  animation: trainIdle 2.8s ease-in-out infinite;
+}
+
+@keyframes trainIdle {
+  0%,
+  100% {
+    transform: translateX(-2px);
+  }
+
+  50% {
+    transform: translateX(2px);
+  }
+}
+
+
+/* Search button shine */
+.schedule-search-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  animation: buttonShine 4s ease-in-out infinite;
+}
+
+@keyframes buttonShine {
+  0%,
+  65% {
+    transform: translateX(-120%);
+  }
+
+  85%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+
+/* Train card left entrance accent */
+.schedule-train-card {
+  position: relative;
+}
+
+.schedule-train-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 0;
+  background: #075197;
+  transition: height 0.35s ease;
+}
+
+.schedule-train-card:hover::before {
+  height: 100%;
+}
+
+
+/* Station suggestion hover */
+.station-suggestions button {
+  position: relative;
+  overflow: hidden;
+}
+
+.station-suggestions button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #075197;
+  transition: width 0.25s ease;
+}
+
+.station-suggestions button:hover::after {
+  width: 100%;
+}
+
+
+/* Result information appears slightly alive */
+.train-card-bottom span {
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* Route line subtle pulse */
+.route-line-display span {
+  transform-origin: center;
+  animation: routePulse 3s ease-in-out infinite;
+}
+
+@keyframes routePulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+
+/* Disable continuous animations when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .route-line-display i,
+  .schedule-search-btn::after,
+  .route-line-display span {
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   PREMIUM CARD INTERACTION
+   ========================================================= */
+
+.schedule-train-card .train-card-top,
+.schedule-train-card .train-route-summary,
+.schedule-train-card .train-card-bottom {
+  transition: background 0.25s ease;
+}
+
+.schedule-train-card:hover .train-card-top {
+  background: #fbfdff;
+}
+
+.schedule-train-card:hover .train-card-bottom {
+  background: #f3f7fb;
+}
+
+
+/* Time emphasis */
+.schedule-time-block strong {
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.schedule-train-card:hover
+.schedule-time-block strong {
+  transform: scale(1.03);
+}
+
+
+/* Train type badge */
+.train-type {
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.schedule-train-card:hover .train-type {
+  transform: translateY(-1px);
+}
+
+
+/* Swap button */
+.schedule-swap-btn {
+  box-shadow: 0 2px 8px rgba(25, 65, 105, 0.06);
+}
+
+.schedule-swap-btn:active {
+  transform: scale(0.9) rotate(180deg);
+}
+
+
+/* Mobile: don't overdo hover effects */
+@media (max-width: 600px) {
+  .schedule-search-card:hover {
+    transform: none;
+  }
+
+  .schedule-train-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .schedule-train-card:hover .schedule-time-block strong {
+    transform: none;
+  }
+}
+
+
+
+
+
+
+/* =========================================================
+   EXPANDABLE TRAIN CARD
+   ========================================================= */
+
+.schedule-train-card {
+  cursor: pointer;
+}
+
+
+/* Expanded card */
+
+.schedule-train-card.train-card-expanded {
+  border-color: #8eb1d0;
+  box-shadow: 0 14px 35px rgba(25, 65, 105, 0.15);
+}
+
+
+/* Details container */
+
+.expanded-train-details {
+  border-top: 1px solid #e1e9f1;
+  background: #f8fafc;
+  padding: 22px;
+  animation: expandTrainDetails 0.35s ease both;
+  transform-origin: top;
+}
+
+@keyframes expandTrainDetails {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 600px;
+  }
+}
+
+
+/* Header */
+
+.expanded-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.expanded-details-header span:first-child {
+  font-size: 10px;
+  font-weight: 800;
+  color: #1671b9;
+  letter-spacing: 1px;
+}
+
+.expanded-details-header h4 {
+  margin-top: 4px;
+  font-size: 17px;
+  color: #173b68;
+}
+
+.collapse-label {
+  font-size: 11px;
+  color: #7b8da0;
+}
+
+
+/* Details grid */
+
+.expanded-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.detail-item {
+  background: white;
+  border: 1px solid #e0e8f0;
+  border-radius: 7px;
+  padding: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.detail-item:hover {
+  transform: translateY(-2px);
+  border-color: #a8c2d9;
+}
+
+.detail-item span {
+  display: block;
+  font-size: 10px;
+  color: #7a8da1;
+  margin-bottom: 5px;
+}
+
+.detail-item strong {
+  font-size: 13px;
+  color: #173b68;
+}
+
+
+/* Expanded route */
+
+.expanded-route {
+  display: grid;
+  grid-template-columns: 1fr 100px 1fr;
+  align-items: center;
+  margin-top: 20px;
+  padding: 18px;
+  background: white;
+  border: 1px solid #e0e8f0;
+  border-radius: 8px;
+}
+
+.expanded-route-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.expanded-route-point:last-child {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.expanded-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  margin-top: 5px;
+  border: 2px solid #075197;
+  border-radius: 50%;
+}
+
+.expanded-route-point small {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  color: #7d8ea0;
+  margin-bottom: 3px;
+}
+
+.expanded-route-point strong {
+  display: block;
+  color: #173b68;
+  font-size: 14px;
+}
+
+.expanded-route-point span {
+  display: block;
+  color: #1671b9;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+.expanded-route-line {
+  height: 2px;
+  background: #c1d0de;
+  position: relative;
+  text-align: center;
+}
+
+.expanded-route-line span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 0 7px;
+  font-size: 17px;
+}
+
+
+/* Dark mode */
+
+.dark-mode .expanded-train-details {
+  background: #101c2a;
+  border-color: #2b4056;
+}
+
+.dark-mode .expanded-details-header h4,
+.dark-mode .detail-item strong,
+.dark-mode .expanded-route-point strong {
+  color: #edf4fa;
+}
+
+.dark-mode .detail-item,
+.dark-mode .expanded-route {
+  background: #152334;
+  border-color: #2b4056;
+}
+
+.dark-mode .expanded-route-line span {
+  background: #152334;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .expanded-train-details {
+    padding: 16px;
+  }
+
+  .expanded-details-header {
+    align-items: flex-start;
+  }
+
+  .collapse-label {
+    font-size: 9px;
+  }
+
+  .expanded-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .detail-item {
+    padding: 10px;
+  }
+
+  .detail-item strong {
+    font-size: 12px;
+  }
+
+  .expanded-route {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .expanded-route-point:last-child {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .expanded-route-line {
+    width: 2px;
+    height: 30px;
+    margin-left: 4px;
+  }
+
+  .expanded-route-line span {
+    left: 50%;
+  }
+}
+
+/* =====================================
+   ML DYNAMIC ETA & DELAY TRENDS
+===================================== */
+.ml-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: #ffffff;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25);
+}
+
+.predicted-time {
+  color: #0284c7 !important;
+}
+
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-top: 4px;
+  width: fit-content;
+}
+
+.trend-badge.trend-improving {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.trend-badge.trend-increasing {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.trend-badge.trend-stable {
+  background: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #fef08a;
+}

@@ -1,0 +1,10 @@
+curr_delay	            ,Current train delay
+station_no	            ,Current station sequence
+curr_dist	            ,Distance at current station
+next_station_no	        ,Next station sequence
+next_dist	            ,Distance at next station
+segment_distance	    ,Distance between stations
+day_of_week	            ,Monday–Sunday
+month	                ,Month
+is_weekend	            ,Weekend or not
+hist_train_avg_delay	,Historical average delay of this train

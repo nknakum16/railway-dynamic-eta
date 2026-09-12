@@ -1,0 +1,33 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "miteshchopda", email = "miteshchopda00@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "joblib>=1.6.0",
+    "lightgbm>=4.7.0",
+    "pandas>=3.0.5",
+    "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "pytest>=9.1.1",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
+    "uvicorn[standard]>=0.52.4",
+]
+
+[project.scripts]
+backend = "backend:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = false
+
