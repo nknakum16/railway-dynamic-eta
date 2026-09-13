@@ -4,8 +4,10 @@ from src.core.logging import logger
 from src.schemas.live_status import CurrentLocation
 from src.schemas.prediction import PredictedStationETA, TrainETAResponse
 from src.services.feature_extractor import feature_extractor
+from src.services.festival_service import festival_service
 from src.services.model_service import model_manager
 from src.services.railradar_client import railradar_client
+from src.services.weather_service import weather_service
 
 
 class ETAService:
@@ -103,6 +105,21 @@ class ETAService:
                 else:
                     trend = "stable"
 
+            # Retrieve weather for station stop
+            stop_dt = None
+            arr_time_str = sched_arr or sched_dep
+            if arr_time_str:
+                try:
+                    stop_dt = datetime.datetime.fromisoformat(arr_time_str)
+                except Exception:
+                    pass
+
+            station_weather = weather_service.get_weather_for_location_and_time(
+                lat=stop.get("lat"),
+                lng=stop.get("lng"),
+                dt=stop_dt,
+            )
+
             station_eta = PredictedStationETA(
                 sequence=seq,
                 stationCode=stop.get("stationCode", "UNK"),
@@ -120,17 +137,39 @@ class ETAService:
                 platform=stop.get("platform"),
                 lat=stop.get("lat"),
                 lng=stop.get("lng"),
+                weatherInfo=station_weather,
             )
             enriched_route.append(station_eta)
+
+        start_date = live_data.get("startDate")
+        fest_info = festival_service.get_features_for_date(start_date)
+        turnaround_info = feature_extractor.extract_turnaround_features(live_data)
+
+        # Overall route weather: sample at current or next upcoming station
+        current_or_next_stop = None
+        for s in raw_route:
+            if int(s.get("sequence", 0)) >= curr_seq:
+                current_or_next_stop = s
+                break
+        if not current_or_next_stop and raw_route:
+            current_or_next_stop = raw_route[-1]
+
+        overall_weather = weather_service.get_weather_for_location_and_time(
+            lat=current_or_next_stop.get("lat") if current_or_next_stop else None,
+            lng=current_or_next_stop.get("lng") if current_or_next_stop else None,
+        )
 
         return TrainETAResponse(
             trainNumber=str(live_data.get("trainNumber", train_number)),
             trainName=str(live_data.get("trainName", f"Train {train_number}")),
-            startDate=live_data.get("startDate"),
+            startDate=start_date,
             status=live_data.get("status", "running"),
             overallDelayMinutes=curr_delay,
             currentLocation=current_location,
             modelUsed=predictor.get_model_name(),
+            festivalInfo=fest_info,
+            turnaroundInfo=turnaround_info,
+            weatherInfo=overall_weather,
             route=enriched_route,
         )
 

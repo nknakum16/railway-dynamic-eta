@@ -540,19 +540,23 @@ class RailRadarClient:
     def _generate_mock_search_stations(self, query: str) -> List[Dict[str, Any]]:
         q = query.strip().lower()
         all_stations = [
-            {"code": "NDLS", "name": "New Delhi", "city": "Delhi", "state": "Delhi"},
-            {"code": "BPL", "name": "Bhopal Junction", "city": "Bhopal", "state": "Madhya Pradesh"},
-            {"code": "INDB", "name": "Indore Junction", "city": "Indore", "state": "Madhya Pradesh"},
-            {"code": "MMCT", "name": "Mumbai Central", "city": "Mumbai", "state": "Maharashtra"},
-            {"code": "CSMT", "name": "Mumbai CSMT", "city": "Mumbai", "state": "Maharashtra"},
-            {"code": "UJN", "name": "Ujjain Junction", "city": "Ujjain", "state": "Madhya Pradesh"},
-            {"code": "GWL", "name": "Gwalior Junction", "city": "Gwalior", "state": "Madhya Pradesh"},
-            {"code": "HWH", "name": "Howrah Junction", "city": "Kolkata", "state": "West Bengal"},
-            {"code": "SVDK", "name": "Shri Mata Vaishno Devi Katra", "city": "Katra", "state": "Jammu and Kashmir"},
+            {"code": "NDLS", "name": "New Delhi", "city": "Delhi", "state": "Delhi", "lat": 28.6424, "lng": 77.2197},
+            {"code": "BPL", "name": "Bhopal Junction", "city": "Bhopal", "state": "Madhya Pradesh", "lat": 23.2599, "lng": 77.4126},
+            {"code": "INDB", "name": "Indore Junction", "city": "Indore", "state": "Madhya Pradesh", "lat": 22.7196, "lng": 75.8577},
+            {"code": "MMCT", "name": "Mumbai Central", "city": "Mumbai", "state": "Maharashtra", "lat": 18.9696, "lng": 72.8193},
+            {"code": "CSMT", "name": "Mumbai CSMT", "city": "Mumbai", "state": "Maharashtra", "lat": 18.9401, "lng": 72.8347},
+            {"code": "ST", "name": "Surat", "city": "Surat", "state": "Gujarat", "lat": 21.2049, "lng": 72.8411},
+            {"code": "BRC", "name": "Vadodara Junction", "city": "Vadodara", "state": "Gujarat", "lat": 22.3107, "lng": 73.1812},
+            {"code": "RTM", "name": "Ratlam Junction", "city": "Ratlam", "state": "Madhya Pradesh", "lat": 23.3441, "lng": 75.0354},
+            {"code": "KOTA", "name": "Kota Junction", "city": "Kota", "state": "Rajasthan", "lat": 25.2138, "lng": 75.8648},
+            {"code": "UJN", "name": "Ujjain Junction", "city": "Ujjain", "state": "Madhya Pradesh", "lat": 23.1815, "lng": 75.7772},
+            {"code": "GWL", "name": "Gwalior Junction", "city": "Gwalior", "state": "Madhya Pradesh", "lat": 26.2183, "lng": 78.1828},
+            {"code": "HWH", "name": "Howrah Junction", "city": "Kolkata", "state": "West Bengal", "lat": 22.5840, "lng": 88.3426},
+            {"code": "SVDK", "name": "Shri Mata Vaishno Devi Katra", "city": "Katra", "state": "Jammu and Kashmir", "lat": 32.9917, "lng": 74.9317},
         ]
         matched = [s for s in all_stations if q in s["code"].lower() or q in s["name"].lower() or q in s.get("city", "").lower()]
         return matched if matched else [
-            {"code": query.upper()[:4], "name": f"{query.title()} Junction", "city": query.title(), "state": "India"}
+            {"code": query.upper()[:4], "name": f"{query.title()} Junction", "city": query.title(), "state": "India", "lat": 28.6139, "lng": 77.2090}
         ]
 
     def _generate_mock_trains_between(

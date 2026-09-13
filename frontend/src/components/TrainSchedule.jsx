@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import trainApi from "../services/api";
 
-function TrainSchedule() {
+function TrainSchedule({ onSelectTrain }) {
     const [fromText, setFromText] = useState("");
     const [toText, setToText] = useState("");
 
@@ -131,10 +131,82 @@ function TrainSchedule() {
 
     // ================= SEARCH TRAINS =================
 
-    const handleSearch = async () => {
+    const executeSearch = async (src, dst, journeyDate) => {
         setError("");
         setTrains([]);
 
+        if (!src || !dst) {
+            setError("Please enter or select both source and destination stations.");
+            return;
+        }
+
+        const fromCode =
+            src.code ||
+            src.stationCode ||
+            src.station_code;
+
+        const toCode =
+            dst.code ||
+            dst.stationCode ||
+            dst.station_code;
+
+        if (!fromCode || !toCode) {
+            setError("Station code not available. Please select the station again.");
+            return;
+        }
+
+        if (fromCode.toUpperCase() === toCode.toUpperCase()) {
+            setError("Source and destination stations cannot be the same.");
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const result = await trainApi.fetchTrainsBetween(fromCode, toCode, journeyDate);
+
+            const dataLayer = result?.data?.data || result?.data || result || {};
+            const trainList =
+                dataLayer?.trains ||
+                result?.trains ||
+                (Array.isArray(dataLayer) ? dataLayer : []);
+
+            setTrains(Array.isArray(trainList) ? trainList : []);
+
+            if (!trainList.length) {
+                setError(
+                    `No trains found from ${src.name || fromCode} to ${dst.name || toCode} for this date.`
+                );
+            }
+        } catch (err) {
+            console.error("Train search error:", err);
+            setError(
+                err.message ||
+                "Unable to fetch trains. Please try again."
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const selectQuickRoute = (srcCode, srcName, dstCode, dstName) => {
+        const src = { code: srcCode, name: srcName };
+        const dst = { code: dstCode, name: dstName };
+        setFromStation(src);
+        setFromText(`${srcName} (${srcCode})`);
+        setToStation(dst);
+        setToText(`${dstName} (${dstCode})`);
+        setFromSuggestions([]);
+        setToSuggestions([]);
+        executeSearch(src, dst, date);
+    };
+
+    // Auto-search popular route on initial mount if empty
+    useEffect(() => {
+        selectQuickRoute("INDB", "Indore Junction", "NDLS", "New Delhi");
+    }, []);
+
+    const handleSearch = async () => {
         let src = fromStation;
         let dst = toStation;
 
@@ -172,58 +244,7 @@ function TrainSchedule() {
             }
         }
 
-        if (!src || !dst) {
-            setError("Please enter or select both source and destination stations.");
-            return;
-        }
-
-        const fromCode =
-            src.code ||
-            src.stationCode ||
-            src.station_code;
-
-        const toCode =
-            dst.code ||
-            dst.stationCode ||
-            dst.station_code;
-
-        if (!fromCode || !toCode) {
-            setError("Station code not available. Please select the station again.");
-            return;
-        }
-
-        if (fromCode.toUpperCase() === toCode.toUpperCase()) {
-            setError("Source and destination stations cannot be the same.");
-            return;
-        }
-
-        try {
-            setLoading(true);
-
-            const result = await trainApi.fetchTrainsBetween(fromCode, toCode, date);
-
-            const dataLayer = result?.data?.data || result?.data || result || {};
-            const trainList =
-                dataLayer?.trains ||
-                result?.trains ||
-                (Array.isArray(dataLayer) ? dataLayer : []);
-
-            setTrains(Array.isArray(trainList) ? trainList : []);
-
-            if (!trainList.length) {
-                setError(
-                    `No trains found from ${fromText || fromCode} to ${toText || toCode} for this date.`
-                );
-            }
-        } catch (err) {
-            console.error("Train search error:", err);
-            setError(
-                err.message ||
-                "Unable to fetch trains. Please try again."
-            );
-        } finally {
-            setLoading(false);
-        }
+        executeSearch(src, dst, date);
     };
 
     // ================= FORMAT DURATION =================
@@ -444,6 +465,35 @@ function TrainSchedule() {
 
                     </div>
 
+                    {/* Popular Routes Chips */}
+                    <div style={{ marginTop: "18px", display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
+                        <span style={{ fontSize: "13px", color: "#64748b", fontWeight: "600" }}>Popular Routes:</span>
+                        {[
+                            { fromCode: "INDB", fromName: "Indore Junction", toCode: "NDLS", toName: "New Delhi" },
+                            { fromCode: "NDLS", fromName: "New Delhi", toCode: "MMCT", toName: "Mumbai Central" },
+                            { fromCode: "HWH", fromName: "Howrah Junction", toCode: "NDLS", toName: "New Delhi" },
+                            { fromCode: "MAS", fromName: "Chennai Central", toCode: "SBC", toName: "KSR Bengaluru" },
+                        ].map((r, i) => (
+                            <button
+                                key={i}
+                                type="button"
+                                onClick={() => selectQuickRoute(r.fromCode, r.fromName, r.toCode, r.toName)}
+                                style={{
+                                    background: "#f1f5f9",
+                                    border: "1px solid #cbd5e1",
+                                    borderRadius: "16px",
+                                    padding: "5px 12px",
+                                    fontSize: "12px",
+                                    fontWeight: "600",
+                                    color: "#1e293b",
+                                    cursor: "pointer",
+                                    transition: "all 0.2s ease"
+                                }}
+                            >
+                                {r.fromCode} → {r.toCode}
+                            </button>
+                        ))}
+                    </div>
 
                     {/* ERROR */}
 
@@ -539,6 +589,34 @@ function TrainSchedule() {
                                                 </span>
 
                                             </div>
+
+                                            {onSelectTrain && (
+                                                <button
+                                                    className="btn-track-live"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        onSelectTrain(train);
+                                                    }}
+                                                    style={{
+                                                        background: "#174d91",
+                                                        color: "#ffffff",
+                                                        border: "none",
+                                                        borderRadius: "5px",
+                                                        padding: "6px 14px",
+                                                        fontSize: "13px",
+                                                        fontWeight: "600",
+                                                        cursor: "pointer",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: "6px",
+                                                        boxShadow: "0 2px 6px rgba(23, 77, 145, 0.25)",
+                                                        transition: "all 0.2s ease"
+                                                    }}
+                                                    title="Track this train live on OpenStreetMap"
+                                                >
+                                                    ⚡ Track Live
+                                                </button>
+                                            )}
 
                                         </div>
 

@@ -2,22 +2,32 @@ import os
 import sys
 from pathlib import Path
 
-# Add project root to sys.path for standalone script execution
+# Add project root to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import joblib
 import lightgbm as lgb
 import numpy as np
 import pandas as pd
-from src.schemas.prediction import ALL_FEATURES, FEATURES, FESTIVAL_FEATURES
+from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+
+from src.schemas.prediction import (
+    ALL_FEATURES,
+    FEATURES,
+    FESTIVAL_FEATURES,
+    TURNAROUND_FEATURES,
+    WEATHER_FEATURES,
+)
 
 
-def train_and_save_sample_model(output_path: str = "models/eta_model.joblib") -> None:
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+def run_model_comparison() -> None:
+    print("=" * 78)
+    print(" Indian Railway Dynamic ETA Prediction System: Progressive Model Comparison")
+    print(" Evaluating Models 1 through 4 (Baseline -> Festival -> Turnaround -> Weather)")
+    print("=" * 78)
 
-    print(f"Generating synthetic training data with {len(ALL_FEATURES)} predictors (including festival factors)...")
     np.random.seed(42)
-    n_samples = 2000
+    n_samples = 3000
 
     curr_delay = np.random.uniform(0, 60, size=(n_samples, 1))
     station_no = np.random.randint(1, 10, size=(n_samples, 1))
@@ -30,9 +40,8 @@ def train_and_save_sample_model(output_path: str = "models/eta_model.joblib") ->
     is_weekend = (day_of_week >= 5).astype(float)
     hist_avg = np.random.uniform(5, 30, size=(n_samples, 1))
 
-    # Calendarific Festival Features
-    # Roughly 15% of annual days fall within major Indian festival windows (Diwali, Holi, Chhath, Eid, etc.)
-    is_festival = (np.random.rand(n_samples, 1) < 0.15).astype(float)
+    # Festival features
+    is_festival = (np.random.rand(n_samples, 1) < 0.18).astype(float)
     festival_importance = is_festival * np.random.choice([1.0, 2.0, 3.0], size=(n_samples, 1), p=[0.2, 0.3, 0.5])
     days_to_festival = np.where(is_festival == 1, np.random.uniform(0, 3, size=(n_samples, 1)), np.random.uniform(4, 45, size=(n_samples, 1)))
     days_from_festival = np.where(is_festival == 1, np.random.uniform(0, 3, size=(n_samples, 1)), np.random.uniform(4, 45, size=(n_samples, 1)))
@@ -40,19 +49,16 @@ def train_and_save_sample_model(output_path: str = "models/eta_model.joblib") ->
     festival_factor = np.round(festival_importance * decay, 2)
     historical_festival_delay = np.round(15.0 * (festival_factor / 3.0), 2)
 
-    # Turnaround / Previous Journey Delay Features
-    # 35% of rake runs inherit delay from incoming journey/turnaround turnaround overrun
+    # Turnaround features
     has_prev_delay = (np.random.rand(n_samples, 1) < 0.35).astype(float)
     previous_trip_delay = np.round(has_prev_delay * np.random.exponential(scale=18.0, size=(n_samples, 1)), 1)
     turnaround_time = np.random.choice([90.0, 120.0, 150.0, 180.0], size=(n_samples, 1), p=[0.2, 0.5, 0.2, 0.1])
     turnaround_delay = np.maximum(0.0, np.round(previous_trip_delay - np.maximum(0.0, (turnaround_time - 100.0) * 0.3), 1))
 
-    # Open-Meteo Weather Features
-    # Meteorological distribution: ~20% rainy/monsoon periods, winter fog low visibility
+    # Weather features (Open-Meteo variables)
     is_monsoon_or_rain = (np.random.rand(n_samples, 1) < 0.22).astype(float)
     rain_mm = np.round(is_monsoon_or_rain * np.random.exponential(scale=8.0, size=(n_samples, 1)), 1)
     wind_speed_kmh = np.round(np.random.uniform(5.0, 35.0, size=(n_samples, 1)) + (is_monsoon_or_rain * np.random.uniform(0, 25.0, size=(n_samples, 1))), 1)
-    # Low visibility (winter fog in North India months 11, 12, 1, 2)
     is_winter_month = np.isin(month, [11, 12, 1, 2]).astype(float)
     has_fog = (is_winter_month * (np.random.rand(n_samples, 1) < 0.30)).astype(float)
     visibility_m = np.where(has_fog == 1, np.random.uniform(200.0, 1500.0, size=(n_samples, 1)), np.random.uniform(5000.0, 10000.0, size=(n_samples, 1)))
@@ -61,7 +67,6 @@ def train_and_save_sample_model(output_path: str = "models/eta_model.joblib") ->
     is_low_visibility = (visibility_m < 1000.0).astype(float)
     is_strong_wind = (wind_speed_kmh >= 40.0).astype(float)
 
-    # Weather severity: 0=Normal, 1=Mild, 2=Moderate, 3=Severe
     weather_severity = np.zeros((n_samples, 1))
     weather_severity = np.where((rain_mm >= 1.0) | (wind_speed_kmh >= 22.0) | (visibility_m < 5000.0), 1.0, weather_severity)
     weather_severity = np.where((rain_mm >= 8.0) | (wind_speed_kmh >= 30.0) | (visibility_m < 2500.0), 2.0, weather_severity)
@@ -96,29 +101,64 @@ def train_and_save_sample_model(output_path: str = "models/eta_model.joblib") ->
         is_strong_wind,
     ])
 
-    df_train = pd.DataFrame(data_matrix, columns=ALL_FEATURES)
+    df = pd.DataFrame(data_matrix, columns=ALL_FEATURES)
 
-    # Target: additional delay at next station with distance drift, weekend surge, festival impact, turnaround propagation, and weather conditions
-    y_train = (
+    # Realistic Ground truth target: operational delay accumulation across railway bottlenecks
+    y = (
         0.05 * curr_delay.ravel()
         + 0.02 * segment_distance.ravel()
         + 1.5 * is_weekend.ravel()
-        + 2.8 * festival_factor.ravel()  # Festival traffic surge
-        + 0.08 * turnaround_delay.ravel()  # Inherited turnaround overrun
-        + 1.8 * weather_severity.ravel()  # Weather delay contribution (caution orders, waterlogging, speed restrictions)
+        + 2.8 * festival_factor.ravel()
+        + 0.08 * turnaround_delay.ravel()
+        + 1.8 * weather_severity.ravel()
         + 0.15 * hist_avg.ravel()
-        + np.random.normal(0, 1.2, size=n_samples)
+        + np.random.normal(0, 1.0, size=n_samples)
     )
-    y_train = np.maximum(0.0, y_train)
+    y = np.maximum(0.0, y)
 
-    print(f"Fitting LGBMRegressor on {len(ALL_FEATURES)} features...")
-    model = lgb.LGBMRegressor(n_estimators=50, max_depth=6, learning_rate=0.05, random_state=42, verbose=-1)
-    model.fit(df_train, y_train)
+    # 80/20 Train-Test split
+    X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=42)
 
-    joblib.dump(model, output_path)
-    print(f"Model successfully saved to {output_path} with {len(ALL_FEATURES)} predictors!")
+    # Feature sets for Models 1, 2, 3, 4
+    feats_m1 = FEATURES  # 10
+    feats_m2 = FEATURES + FESTIVAL_FEATURES  # 16
+    feats_m3 = FEATURES + FESTIVAL_FEATURES + TURNAROUND_FEATURES  # 19
+    feats_m4 = ALL_FEATURES  # 26
+
+    def evaluate(feats, name):
+        m = lgb.LGBMRegressor(n_estimators=50, max_depth=6, learning_rate=0.05, random_state=42, verbose=-1)
+        m.fit(X_train[feats], y_train)
+        pred = np.maximum(0.0, m.predict(X_test[feats]))
+        mae = mean_absolute_error(y_test, pred)
+        rmse = root_mean_squared_error(y_test, pred)
+        r2 = r2_score(y_test, pred)
+        return m, mae, rmse, r2
+
+    m1, mae1, rmse1, r21 = evaluate(feats_m1, "Model 1")
+    m2, mae2, rmse2, r22 = evaluate(feats_m2, "Model 2")
+    m3, mae3, rmse3, r23 = evaluate(feats_m3, "Model 3")
+    m4, mae4, rmse4, r24 = evaluate(feats_m4, "Model 4")
+
+    print(f"\nEvaluation Results on Test Set (N=600 samples):")
+    print("-" * 78)
+    print(f"{'Model Configuration':<40} | {'MAE (min)':<10} | {'RMSE (min)':<10} | {'R^2':<8}")
+    print("-" * 78)
+    print(f"{'Model 1: Baseline (10 Feats)':<40} | {mae1:<10.4f} | {rmse1:<10.4f} | {r21:<8.4f}")
+    print(f"{'Model 2: + Festival Factor (16 Feats)':<40} | {mae2:<10.4f} | {rmse2:<10.4f} | {r22:<8.4f}")
+    print(f"{'Model 3: + Turnaround Effect (19 Feats)':<40} | {mae3:<10.4f} | {rmse3:<10.4f} | {r23:<8.4f}")
+    print(f"{'Model 4: + Open-Meteo Weather (26 Feats)':<40} | {mae4:<10.4f} | {rmse4:<10.4f} | {r24:<8.4f}")
+    print("-" * 78)
+    print(f"Overall MAE Improvement (Model 1 -> Model 4): {((mae1 - mae4)/mae1)*100:+.2f}%")
+    print(f"Overall R^2 Improvement  (Model 1 -> Model 4): {((r24 - r21)/max(abs(r21), 1e-6))*100:+.2f}%")
+    print("-" * 78)
+
+    print("\nTop 8 Feature Importances in Full Model 4:")
+    importances = m4.feature_importances_
+    feat_imp = sorted(zip(ALL_FEATURES, importances), key=lambda x: x[1], reverse=True)
+    for name, imp in feat_imp[:8]:
+        print(f"  - {name:<26}: {imp}")
+    print("=" * 78)
 
 
 if __name__ == "__main__":
-    train_and_save_sample_model()
-
+    run_model_comparison()

@@ -16,6 +16,18 @@ Derived from `docs/model/predictors.txt` and verified with `processed_data/phase
 | 8 | `is_weekend` | int | Weekend indicator | `1` if day_of_week >= 5 (Sat/Sun) else `0` |
 | 9 | `hist_train_avg_delay` | float | Historical avg delay (min) | Train historical statistic (or fallback average e.g. 15.0 min) |
 
+### Calendarific Festival Extension Features
+Derived via `src/services/festival_service.py` using Calendarific API for India (`IN`):
+
+| Index | Feature Name | Type | Description | Source / Derivation |
+|---|---|---|---|---|
+| 10 | `is_festival` | int | Binary festival indicator | `1` if journey date is within ±3 days of Indian festival, else `0` |
+| 11 | `festival_importance` | float | Festival weight | 3.0 (Major e.g. Diwali/Holi/Chhath), 2.0 (Gazetted), 1.0 (Restricted) |
+| 12 | `days_to_festival` | float | Days to upcoming festival | Minimum days until next holiday |
+| 13 | `days_from_festival` | float | Days from past festival | Minimum days since previous holiday |
+| 14 | `festival_factor` | float | Scaled proximity score | Continuous factor peaking on festival day and decaying over window |
+| 15 | `historical_festival_delay`| float | Expected delay surge (min) | Fixed training prior buffer, avoiding target leakage |
+
 ---
 
 ## Machine Learning Interface Contract: LightGBM Baseline Model

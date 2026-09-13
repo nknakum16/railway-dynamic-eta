@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import numpy as np
 import pytest
 from src.core.config import settings
-from src.schemas.prediction import FEATURES, StationFeatures
+from src.schemas.prediction import ALL_FEATURES, FEATURES, StationFeatures
 from src.services.model_service import (
     HeuristicFallbackPredictor,
     LightGBMModelPredictor,
@@ -12,18 +12,19 @@ from src.services.model_service import (
 
 
 def _make_sample_dict(curr_delay: float = 10.0, segment_dist: float = 50.0) -> dict:
-    return {
-        "curr_delay": curr_delay,
-        "station_no": 2,
-        "curr_dist": 40.0,
-        "next_station_no": 3,
-        "next_dist": 40.0 + segment_dist,
-        "segment_distance": segment_dist,
-        "day_of_week": 2,
-        "month": 6,
-        "is_weekend": 0,
-        "hist_train_avg_delay": 12.0,
-    }
+    feat = StationFeatures(
+        curr_delay=curr_delay,
+        station_no=2,
+        curr_dist=40.0,
+        next_station_no=3,
+        next_dist=40.0 + segment_dist,
+        segment_distance=segment_dist,
+        day_of_week=2,
+        month=6,
+        is_weekend=0,
+        hist_train_avg_delay=12.0,
+    )
+    return feat.to_dict()
 
 
 def _make_sample_feature(curr_delay: float = 10.0, segment_dist: float = 50.0) -> StationFeatures:
@@ -38,11 +39,11 @@ def test_model_artifact_loads_successfully():
     assert predictor.get_model_path() == settings.MODEL_PATH
 
 
-# 2. The model reports exactly 10 input features
-def test_model_reports_ten_features():
+# 2. The model reports exactly all input features
+def test_model_reports_features_count():
     predictor = model_manager.get_predictor()
     assert isinstance(predictor, LightGBMModelPredictor)
-    assert getattr(predictor._model, "n_features_in_", None) == 10
+    assert getattr(predictor._model, "n_features_in_", None) == len(ALL_FEATURES)
 
 
 # 3. Feature order is preserved
@@ -50,7 +51,7 @@ def test_feature_order_is_preserved():
     predictor = model_manager.get_predictor()
     assert isinstance(predictor, LightGBMModelPredictor)
     model_features = list(getattr(predictor._model, "feature_name_", []))
-    assert model_features == FEATURES
+    assert model_features == ALL_FEATURES
 
 
 # 4. A valid feature payload returns a finite numeric prediction

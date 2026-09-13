@@ -2,7 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import trainImage from "./assets/train.jpg";
 import LiveTrainStatus from "./components/LiveTrainStatus";
 import TrainSchedule from "./components/TrainSchedule";
-import trainApi from "./services/api";
+import AuthModal from "./components/AuthModal";
+import InTrainAssistant from "./components/InTrainAssistant";
+import MyAlarmsModal from "./components/MyAlarmsModal";
+import WatchJourneyModal from "./components/WatchJourneyModal";
+import NotificationCenter from "./components/NotificationCenter";
+import trainApi, { authApi, notificationApi } from "./services/api";
 import "./App.css";
 
 function App() {
@@ -10,6 +15,29 @@ function App() {
   const [search, setSearch] = useState("");
   const [selectedTrain, setSelectedTrain] = useState(null);
   const [language, setLanguage] = useState("English");
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const langDropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target)) {
+        setLangMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectLanguage = (selectedLang, langCode) => {
+    setLanguage(selectedLang);
+    setLangMenuOpen(false);
+    const googleSelect = document.querySelector(".goog-te-combo");
+    if (googleSelect) {
+      googleSelect.value = langCode;
+      googleSelect.dispatchEvent(new Event("change"));
+    }
+  };
+
   const [activePage, setActivePage] = useState("home");
   const resultRef = useRef(null);
   const timelineRef = useRef(null);
@@ -18,6 +46,54 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [popularTrains, setPopularTrains] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Auth, In-Train, Alarm, and Notification Modals
+  const [currentUser, setCurrentUser] = useState(authApi.getUser());
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [inTrainModalOpen, setInTrainModalOpen] = useState(false);
+  const [myAlarmsModalOpen, setMyAlarmsModalOpen] = useState(false);
+  const [watchModalOpen, setWatchModalOpen] = useState(false);
+  const [notifCenterOpen, setNotifCenterOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  // Background check for notifications & live triggers
+  useEffect(() => {
+    const checkNotifications = async () => {
+      try {
+        let userCoords = null;
+        if ("geolocation" in navigator) {
+          try {
+            const pos = await new Promise((resolve, reject) => {
+              navigator.geolocation.getCurrentPosition(resolve, reject, {
+                timeout: 3000,
+                maximumAge: 60000,
+              });
+            });
+            if (pos?.coords) {
+              userCoords = {
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+              };
+            }
+          } catch {
+            // Location permission not granted; backend will use schedule estimation fallback
+          }
+        }
+
+        await notificationApi.evaluateNotifications(userCoords).catch(() => {});
+        const res = await notificationApi.getNotifications(10);
+        if (res?.success && res?.data) {
+          setUnreadCount(res.data.unread_count || 0);
+        }
+      } catch (err) {
+        console.debug("Notification poll err:", err);
+      }
+    };
+
+    checkNotifications();
+    const interval = setInterval(checkNotifications, 25000);
+    return () => clearInterval(interval);
+  }, []);
 
   const scrollToCurrentStation = () => {
     setTimeout(() => {
@@ -280,6 +356,9 @@ function App() {
             : etaData.status || "Running",
         lastUpdated: new Date().toISOString(),
         modelUsed: etaData.modelUsed || "lightgbm_baseline",
+        festivalInfo: etaData.festivalInfo || etaData.festival_info || null,
+        turnaroundInfo: etaData.turnaroundInfo || etaData.turnaround_info || null,
+        weatherInfo: etaData.weatherInfo || etaData.weather_info || null,
         prediction: {
           scheduledArrival: formatTime(nextRoute?.scheduledArrival),
           predictedArrival: formatTime(nextRoute?.predictedArrival || nextRoute?.actualArrival),
@@ -331,6 +410,7 @@ function App() {
             status: stopStatus,
             platform: station.platform,
             distance: station.distance,
+            weatherInfo: station.weatherInfo || null,
           };
         }),
       };
@@ -381,40 +461,111 @@ function App() {
             />
           </div>
 
-          <select
-            className="language"
-            value={language}
-            onChange={(e) => {
-              const selectedLanguage = e.target.value;
+          {/* Language Translator Icon Button */}
+          <div className="language-dropdown-container" ref={langDropdownRef}>
+            <button
+              className={`btn-header-icon ${langMenuOpen ? "active" : ""}`}
+              onClick={() => setLangMenuOpen(!langMenuOpen)}
+              title={`Translate Language (${language})`}
+              aria-label="Change Language"
+            >
+              🌐
+            </button>
 
-              setLanguage(selectedLanguage);
+            {langMenuOpen && (
+              <div className="language-dropdown-menu">
+                <button
+                  className={`lang-option ${language === "English" ? "active" : ""}`}
+                  onClick={() => selectLanguage("English", "en")}
+                >
+                  <span>English</span>
+                  {language === "English" && <span className="check">✓</span>}
+                </button>
+                <button
+                  className={`lang-option ${language === "Hindi" ? "active" : ""}`}
+                  onClick={() => selectLanguage("Hindi", "hi")}
+                >
+                  <span>हिन्दी</span>
+                  {language === "Hindi" && <span className="check">✓</span>}
+                </button>
+                <button
+                  className={`lang-option ${language === "Gujarati" ? "active" : ""}`}
+                  onClick={() => selectLanguage("Gujarati", "gu")}
+                >
+                  <span>ગુજરાતી</span>
+                  {language === "Gujarati" && <span className="check">✓</span>}
+                </button>
+              </div>
+            )}
+          </div>
 
-              const languageCode = {
-                English: "en",
-                Hindi: "hi",
-                Gujarati: "gu",
-              }[selectedLanguage];
-
-              const googleSelect = document.querySelector(".goog-te-combo");
-
-              if (googleSelect) {
-                googleSelect.value = languageCode;
-                googleSelect.dispatchEvent(new Event("change"));
-              }
-            }}
-          >
-            <option value="English">English</option>
-            <option value="Hindi">हिन्दी</option>
-            <option value="Gujarati">ગુજરાતી</option>
-          </select>
-
+          {/* Theme Toggle Button */}
           <button
-            className={`theme-toggle ${darkMode ? "dark" : ""}`}
+            className={`btn-header-icon theme-toggle ${darkMode ? "dark" : ""}`}
             onClick={() => setDarkMode(!darkMode)}
             title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            aria-label="Toggle Dark Mode"
           >
             {darkMode ? "☀️" : "🌙"}
           </button>
+
+          {/* In-Train Mode Button */}
+          <button
+            className="btn-header-icon btn-in-train-header"
+            onClick={() => setInTrainModalOpen(true)}
+            title="In-Train Assistant & Proximity Alarms"
+            aria-label="In-Train Mode"
+          >
+            🚆
+          </button>
+
+          {/* Saved Alarms Button */}
+          <button
+            className="btn-header-icon btn-alarms-header"
+            onClick={() => setMyAlarmsModalOpen(true)}
+            title="My Destination Alarms"
+            aria-label="My Destination Alarms"
+          >
+            ⏰
+          </button>
+
+          {/* Smart Notification Center Button */}
+          <button
+            className="btn-header-icon btn-notifications-header"
+            onClick={() => setNotifCenterOpen(true)}
+            title="Journey Alerts & Updates"
+            aria-label="Notification Center"
+          >
+            🔔
+            {unreadCount > 0 && (
+              <span className="header-notif-badge">{unreadCount}</span>
+            )}
+          </button>
+
+          {/* User Profile / Auth Button */}
+          {currentUser ? (
+            <div className="user-profile-pill">
+              <span className="user-avatar">👤</span>
+              <span className="user-name">{currentUser.full_name?.split(" ")[0]}</span>
+              <button
+                className="btn-logout-small"
+                onClick={() => {
+                  authApi.logout();
+                  setCurrentUser(null);
+                }}
+                title="Sign Out"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <button
+              className="btn-auth-header"
+              onClick={() => setAuthModalOpen(true)}
+            >
+              Sign In
+            </button>
+          )}
 
         </div>
 
@@ -443,47 +594,37 @@ function App() {
               setMobileMenuOpen(false);
             }}
           >
-            Home
+            🏠 Home (Dynamic ETA)
           </button>
 
           <button
-            className={activePage === "live" ? "nav-active" : ""}
+            className={`nav-gps-btn ${activePage === "live" ? "nav-active" : ""}`}
             onClick={() => {
               setActivePage("live");
               setMobileMenuOpen(false);
             }}
           >
-            Live Train Status
+            ⚡ Live GPS Assistant
           </button>
 
           <button
-            className={activePage === "schedule" ? "nav-active" : ""}
+            className={`nav-schedule-btn ${activePage === "schedule" ? "nav-active" : ""}`}
             onClick={() => {
               setActivePage("schedule");
               setMobileMenuOpen(false);
             }}
           >
-            Train Schedule
+            📅 Train Schedule
           </button>
 
           <button
-            className={activePage === "between" ? "nav-active" : ""}
+            className="nav-watch-btn"
             onClick={() => {
-              setActivePage("between");
+              setNotifCenterOpen(true);
               setMobileMenuOpen(false);
             }}
           >
-            Trains between Stations
-          </button>
-
-          <button
-            className={activePage === "more" ? "nav-active" : ""}
-            onClick={() => {
-              setActivePage("more");
-              setMobileMenuOpen(false);
-            }}
-          >
-            More
+            🔔 Journey Watch & Updates
           </button>
 
         </div>
@@ -492,9 +633,24 @@ function App() {
       {/* ================= PAGE CONTENT ================= */}
 
       {activePage === "live" ? (
-        <LiveTrainStatus />
+        <LiveTrainStatus
+          initialTrainNumber={selectedTrain?.number || selectedTrain?.trainNumber || "12919"}
+          onSetAlarm={(trainData) => {
+            if (trainData) {
+              setSelectedTrain(trainData);
+            }
+            setInTrainModalOpen(true);
+          }}
+        />
       ) : activePage === "schedule" || activePage === "between" ? (
-        <TrainSchedule />
+        <TrainSchedule
+          onSelectTrain={(trainData) => {
+            if (trainData) {
+              setSelectedTrain(trainData);
+            }
+            setActivePage("live");
+          }}
+        />
       ) : (
         <>
 
@@ -514,9 +670,7 @@ function App() {
 
             </div>
 
-
             {/* SEARCH PANEL */}
-
             <div className="search-panel">
               <select
                 className="mobile-search-type"
@@ -613,68 +767,39 @@ function App() {
 
           <section className="services">
 
-            <div className="service-card">
-
+            <div className="service-card" onClick={() => setActivePage("live")}>
               <div className="service-icon">
-                🚆
+                ⚡
               </div>
-
-              <h3>Live Train Status</h3>
-
-              <p>Real-time running status</p>
-
+              <h3>Live GPS Assistant</h3>
+              <p>Real-time OpenStreetMap tracking</p>
             </div>
 
-
-            <div className="service-card">
-
+            <div className="service-card" onClick={() => setActivePage("schedule")}>
               <div className="service-icon">
                 📅
               </div>
-
               <h3>Train Schedule</h3>
-
-              <p>Arrival & Departure time</p>
-
+              <p>Find trains running between stations</p>
             </div>
 
-
-            <div className="service-card">
-
+            <div className="service-card" onClick={() => setNotifCenterOpen(true)}>
               <div className="service-icon">
-                🚌
+                🔔
               </div>
-
-              <h3>Coach Position</h3>
-
-              <p>Find your coach</p>
-
+              <h3>Smart Journey Watch</h3>
+              <p>{unreadCount > 0 ? `${unreadCount} new alerts` : "Proactive delay & route alerts"}</p>
             </div>
 
-
-            <div className="service-card">
-
+            <div className="service-card" onClick={() => {
+              if (selectedTrain) scrollToCurrentStation();
+              else alert("Please search for a train above to view station weather telemetry.");
+            }}>
               <div className="service-icon">
-                🔀
+                🌧️
               </div>
-
-              <h3>Trains between Stations</h3>
-
-              <p>Direct trains list</p>
-
-            </div>
-
-
-            <div className="service-card cancellation">
-
-              <div className="service-icon">
-                ❌
-              </div>
-
-              <h3>Cancellation / Reschedule</h3>
-
-              <p>Stay updated</p>
-
+              <h3>Weather Intelligence</h3>
+              <p>Open-Meteo rain & visibility risk</p>
             </div>
 
           </section>
@@ -689,6 +814,14 @@ function App() {
                 <div className="train-heading">
 
                   <div className="status-top-row">
+                    <button
+                      className="btn-status-alarm"
+                      onClick={() => setInTrainModalOpen(true)}
+                      title="Set Destination Arrival Alarm"
+                    >
+                      ⏰ Set Alarm
+                    </button>
+
                     <span className="status-badge">
                       ● LIVE
                     </span>
@@ -700,6 +833,25 @@ function App() {
                     {selectedTrain.modelUsed && (
                       <span className="ml-badge" title="Dynamic ETA computed by LightGBM model">
                         ⚡ ML Model: {selectedTrain.modelUsed}
+                      </span>
+                    )}
+
+                    {selectedTrain.turnaroundInfo && (
+                      <span
+                        className="turnaround-badge"
+                        title={`Turnaround Telemetry: Inherited Delay +${selectedTrain.turnaroundInfo.previous_trip_delay}m (Turnaround Buffer: ${selectedTrain.turnaroundInfo.turnaround_time}m)`}
+                      >
+                        ⏱️ Previous Trip: {selectedTrain.turnaroundInfo.previous_trip_delay > 0 ? `+${Math.round(selectedTrain.turnaroundInfo.previous_trip_delay)}m delay` : "On Time"}
+                      </span>
+                    )}
+
+                    {selectedTrain.weatherInfo && (
+                      <span
+                        className={`weather-badge severity-${selectedTrain.weatherInfo.weather_severity || 0}`}
+                        title={`Open-Meteo: ${selectedTrain.weatherInfo.condition_description} | Rain: ${selectedTrain.weatherInfo.rain_mm}mm | Wind: ${selectedTrain.weatherInfo.wind_speed_kmh}km/h | Visibility: ${Math.round((selectedTrain.weatherInfo.visibility_m || 10000)/1000)}km`}
+                      >
+                        🌧️ Weather: {selectedTrain.weatherInfo.condition_description}
+                        {selectedTrain.weatherInfo.weather_severity >= 2 && " (Risk Caution)"}
                       </span>
                     )}
                   </div>
@@ -832,6 +984,15 @@ function App() {
                             </span>
                           )}
 
+                          {stop.weatherInfo && stop.weatherInfo.weather_severity > 0 && (
+                            <span
+                              className={`station-weather-pill severity-${stop.weatherInfo.weather_severity}`}
+                              title={`${stop.weatherInfo.condition_description} | Rain: ${stop.weatherInfo.rain_mm}mm | Wind: ${stop.weatherInfo.wind_speed_kmh}km/h`}
+                            >
+                              🌧️ {stop.weatherInfo.condition_description}
+                            </span>
+                          )}
+
                         </div>
 
                       </div>
@@ -865,19 +1026,19 @@ function App() {
           {/* Quick Links */}
           <div className="footer-column">
             <h4>Quick Links</h4>
-            <button onClick={() => setActivePage("home")}>Home</button>
-            <button onClick={() => setActivePage("live")}>Live Train Status</button>
-            <button>Train Schedule</button>
-            <button>Trains Between Stations</button>
+            <button onClick={() => setActivePage("home")}>Home (Dynamic ETA)</button>
+            <button onClick={() => setActivePage("live")}>Live GPS Assistant</button>
+            <button onClick={() => setActivePage("schedule")}>Train Schedule</button>
+            <button onClick={() => setNotifCenterOpen(true)}>Smart Journey Watch</button>
           </div>
 
           {/* Railway Services */}
           <div className="footer-column">
             <h4>Railway Services</h4>
-            <button>Track Your Train</button>
-            <button>Train Running Status</button>
-            <button>Coach Position</button>
-            <button>Journey Information</button>
+            <button onClick={() => setInTrainModalOpen(true)}>In-Train Mode</button>
+            <button onClick={() => setActivePage("home")}>LightGBM Delay Predictor</button>
+            <button onClick={() => setNotifCenterOpen(true)}>Live Delay Alert Center</button>
+            <button onClick={() => setAuthModalOpen(true)}>Passenger Account Portal</button>
           </div>
 
           {/* Information */}
@@ -908,6 +1069,47 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* ================= MODALS & POPUPS ================= */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onAuthSuccess={(user) => setCurrentUser(user)}
+      />
+
+      <InTrainAssistant
+        isOpen={inTrainModalOpen}
+        onClose={() => setInTrainModalOpen(false)}
+        initialTrain={selectedTrain}
+        currentUser={currentUser}
+        onAlarmCreated={() => {}}
+      />
+
+      <MyAlarmsModal
+        isOpen={myAlarmsModalOpen}
+        onClose={() => setMyAlarmsModalOpen(false)}
+        onOpenInTrainModal={() => setInTrainModalOpen(true)}
+      />
+
+      <WatchJourneyModal
+        isOpen={watchModalOpen}
+        onClose={() => setWatchModalOpen(false)}
+        train={selectedTrain}
+        onSuccess={() => {
+          notificationApi.getNotifications(10).then((res) => {
+            if (res?.success && res?.data) {
+              setUnreadCount(res.data.unread_count || 0);
+            }
+          });
+        }}
+      />
+
+      <NotificationCenter
+        isOpen={notifCenterOpen}
+        onClose={() => setNotifCenterOpen(false)}
+        onNotificationRead={(newCount) => setUnreadCount(newCount)}
+        onOpenWatchModal={() => setWatchModalOpen(true)}
+      />
     </div>
   );
 }

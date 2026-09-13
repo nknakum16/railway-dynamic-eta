@@ -11,6 +11,16 @@ wheels/
 
 # Environment variables
 .env
+.env.*
+.env.local
+!.env.example
 
-# Cache
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+railway.db
+
+# Cache & Local Data
 .pytest_cache/
+data/festivals/

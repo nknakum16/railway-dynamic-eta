@@ -55,36 +55,38 @@ class LightGBMModelPredictor(BasePredictor):
         # Trusted repository code loaded via joblib as specified
         model = joblib.load(path_obj)
 
-        # 1. Feature count verification
+        # 1. Feature count & name verification
         n_features = getattr(model, "n_features_in_", None)
-        if n_features != len(FEATURES):
-            raise ValueError(
-                f"Serialized model feature count ({n_features}) does not match FEATURES ({len(FEATURES)})"
-            )
-
-        # 2. Feature order verification
         model_features = list(getattr(model, "feature_name_", []))
-        if model_features and model_features != FEATURES:
-            raise ValueError(f"Model feature order mismatch: {model_features!r} vs {FEATURES!r}")
+
+        if model_features:
+            self.expected_features = model_features
+        elif n_features == len(FEATURES):
+            self.expected_features = FEATURES
+        elif n_features is not None and n_features == len(ALL_FEATURES):
+            self.expected_features = ALL_FEATURES
+        else:
+            self.expected_features = FEATURES[:n_features] if n_features else FEATURES
 
         logger.info(
-            "Successfully loaded LightGBM model (%s) with %d trees",
+            "Successfully loaded LightGBM model (%s) expecting %d features (%s...)",
             type(model).__name__,
-            getattr(model, "n_estimators", 500),
+            len(self.expected_features),
+            ", ".join(self.expected_features[:4]),
         )
         return model
 
     def predict_additional_delay(self, values: Dict[str, float]) -> float:
         """Validate input dictionary, construct DataFrame, and predict non-negative additional delay."""
-        # 1. Check for missing features (no silent fallbacks)
-        missing = [name for name in FEATURES if name not in values]
+        # 1. Check for missing features required by this specific model artifact
+        missing = [name for name in self.expected_features if name not in values]
         if missing:
             raise ValueError(f"Missing model features: {missing}")
 
-        # 2. Construct DataFrame with explicit column order
+        # 2. Construct DataFrame with explicit column order matching model contract
         frame = pd.DataFrame(
-            [[values[name] for name in FEATURES]],
-            columns=FEATURES,
+            [[values[name] for name in self.expected_features]],
+            columns=self.expected_features,
         )
 
         # 3. Numeric validation
@@ -102,7 +104,7 @@ class LightGBMModelPredictor(BasePredictor):
 
         # Convert list of Pydantic models to DataFrame ensuring exact column order
         rows = [f.to_dict() for f in features_list]
-        frame = pd.DataFrame(rows, columns=FEATURES)
+        frame = pd.DataFrame(rows, columns=self.expected_features)
 
         if frame.isna().any().any():
             raise ValueError("Model features must not contain null values")
@@ -121,7 +123,7 @@ class LightGBMModelPredictor(BasePredictor):
 
 
 class HeuristicFallbackPredictor(BasePredictor):
-    """Domain-informed baseline model used if no trained model artifact is present."""
+    """Domain-informed baseline model incorporating distance, weekend, and Calendarific festival factor."""
 
     def predict_additional_delay(self, values: Dict[str, float]) -> float:
         missing = [name for name in FEATURES if name not in values]
@@ -130,10 +132,15 @@ class HeuristicFallbackPredictor(BasePredictor):
 
         seg_dist = float(values.get("segment_distance", 0.0))
         is_weekend = float(values.get("is_weekend", 0.0))
-        congestion = 1.15 if is_weekend else 1.0
+        fest_factor = float(values.get("festival_factor", 0.0))
+        turnaround_delay = float(values.get("turnaround_delay", 0.0))
 
-        # Estimated additional delay between current and next station
-        add_delay = (seg_dist / 100.0) * 1.8 * congestion
+        # Combined congestion factor: weekend surge + festival traffic surge
+        congestion = (1.15 if is_weekend else 1.0) * (1.0 + 0.15 * fest_factor)
+
+        # Estimated additional delay between current and next station, factoring turnaround overrun
+        turnaround_impact = min(3.0, turnaround_delay * 0.03)
+        add_delay = (seg_dist / 100.0) * 1.8 * congestion + turnaround_impact
         return round(max(0.0, add_delay), 2)
 
     def predict(self, features_list: List[StationFeatures]) -> List[float]:

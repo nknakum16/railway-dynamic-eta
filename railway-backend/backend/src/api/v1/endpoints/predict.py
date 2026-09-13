@@ -38,12 +38,30 @@ async def predict_segment_additional_delay(
             request.scheduled_arrival_next, total_delay
         )
 
+    fest_info = {
+        "is_festival": bool(request.features.is_festival),
+        "festival_name": request.features.festival_name or ("Festival Period" if request.features.is_festival else "None"),
+        "festival_importance": request.features.festival_importance,
+        "days_to_festival": request.features.days_to_festival,
+        "days_from_festival": request.features.days_from_festival,
+        "festival_factor": request.features.festival_factor,
+        "historical_festival_delay": request.features.historical_festival_delay,
+    }
+
+    turnaround_info = {
+        "previous_trip_delay": float(request.features.previous_trip_delay),
+        "turnaround_time": float(request.features.turnaround_time),
+        "turnaround_delay": float(request.features.turnaround_delay),
+    }
+
     return SinglePredictResponse(
         predicted_additional_delay_minutes=round(add_delay, 2),
         current_delay_minutes=round(float(request.features.curr_delay), 2),
         predicted_eta=predicted_eta,
         model=predictor.get_model_name(),
         model_artifact=predictor.get_model_path() or "fallback",
+        festival_info=fest_info,
+        turnaround_info=turnaround_info,
     )
 
 

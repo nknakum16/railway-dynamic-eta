@@ -16,6 +16,14 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     setup_logging()
     logger.info("Initializing %s v%s...", settings.PROJECT_NAME, settings.VERSION)
 
+    # Initialize database tables
+    try:
+        from src.db.session import init_db
+        init_db()
+        logger.info("Database initialized successfully.")
+    except Exception as exc:
+        logger.error("Database initialization failed: %s", exc)
+
     # Pre-warm ML model predictor
     predictor = model_manager.get_predictor()
     logger.info(
