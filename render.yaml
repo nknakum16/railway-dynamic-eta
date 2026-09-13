@@ -1,0 +1,20 @@
+﻿services:
+  - type: web
+    name: railway-dynamic-eta-backend
+    runtime: python
+    rootDir: railway-backend/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn src.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: RAILRADAR_API_KEY
+        sync: false
+      - key: CALENDARIFIC_API_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ENABLE_MOCK_FALLBACK
+        value: "true"
+      - key: CORS_ORIGINS
+        value: '["*"]'
